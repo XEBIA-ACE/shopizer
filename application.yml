@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.shopizer</groupId>
+    <artifactId>shopizer</artifactId>
+    <packaging>pom</packaging>
+    <version>3.2.3</version>
+
+    <name>shopizer</name>
+    <url>http://ww.shopizer.com</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.0</version> <!-- Updated Spring Boot version -->
+    </parent>
+
+    <modules>
+        <module>sm-core-model</module>
+        <module>sm-core-modules</module>
+        <module>sm-core</module>
+        <module>sm-shop-model</module>
+        <module>sm-shop</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>17</java.version> <!-- Java version updated for Spring Boot 3 support -->
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <shopizer.search.version>2.11.1</shopizer.search.version>
+        <shopizer-canadapost.version>2.15.0</shopizer-canadapost.version>
+        <elasticsearch.version>8.5.3</elasticsearch.version> <!-- Updated to latest stable Elasticsearch version -->
+        <guava.version>31.1-jre</guava.version> <!-- Updated recommended Guava version -->
+        <commons-lang.version>3.12.0</commons-lang.version> <!-- Ensure commons-lang3 is up to date -->
+        <commons-io.version>2.11.0</commons-io.version> <!-- Update to latest commons-io -->
+        <commons-collections4.version>4.4</commons-collections4.version> <!-- Update to latest commons-collections4 -->
+        <commons-validator.version>1.7</commons-validator.version> <!-- Update to latest commons-validator -->
+        <commons-fileupload>1.4</commons-fileupload> <!-- Update to latest commons-fileupload -->
+        <org.mapstruct.version>1.5.3.Final</org.mapstruct.version> <!-- Update to latest mapstruct version -->
+        <org.apache.httpcomponent.version>4.5.13</org.apache.httpcomponent.version> <!-- Latest stable version -->
+        <jakarta.el.version>4.0.2</jakarta.el.version> <!-- Migrated from javax.el to jakarta.el -->
+        <jakarta.servlet-api-version>5.0.0</jakarta.servlet-api-version> <!-- Migrated from javax.servlet to jakarta.servlet -->
+        <jakarta.annotation>2.0.1</jakarta.annotation> <!-- Migrated from javax.annotation to jakarta.annotation -->
+        <infinispan.version>14.0.6.Final</infinispan.version> <!-- Updated to the latest stable Infinispan version -->
+        <infinispan.tree.version>14.0.6.Final</infinispan.tree.version>
+        <mysql-jdbc-version>8.0.28</mysql-jdbc-version> <!-- Updated MySQL connector -->
+        <oracle.version>21.3.0.0</oracle.version> <!-- Latest Oracle JDBC -->
+        <postgresql.version>42.3.1</postgresql.version> <!-- Latest stable PostgreSQL JDBC version -->
+        <simple-json-version>1.1.1</simple-json-version>
+        <jackson-version-databind>2.13.3</jackson-version-databind> <!-- Latest stable of jackson-databind -->
+        <jackson-version>2.13.3</jackson-version> <!-- Latest stable of jackson-core and annotations -->
+        <geoip2.version>3.0.0</geoip2.version> <!-- Latest GeoIP2 version -->
+        <drools.version>8.25.0.Final</drools.version> <!-- Latest drools version -->
+        <google-client-maps-services-version>2.1.0</google-client-maps-services-version> <!-- Latest stable Google Maps version -->
+        <jwt.version>0.11.2</jwt.version> <!-- Latest stable JJWT version -->
+
+        <!-- api documentation, consider switching to springdoc which replaces springfox -->
+        <swagger.version>3.0.0</swagger.version> <!-- Latest stable springfox version -->
+
+        <!-- jacoco coverage -->
+        <coverage.lines>.30</coverage.lines>
+        <coverage.branches>.37</coverage.branches>
+    </properties>
+
+    <!--BOM -->
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-cache</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>com.shopizer</groupId>
+                <artifactId>sm-core</artifactId>
+                <version>3.2.3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.shopizer</groupId>
+                <artifactId>sm-core-model</artifactId>
+                <version>3.2.3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.shopizer</groupId>
+                <artifactId>sm-core-modules</artifactId>
+                <version>3.2.3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.shopizer</groupId>
+                <artifactId>sm-shop-model</artifactId>
+                <version>3.2.3</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/jakarta.inject/jakarta.inject-api -->
+            <dependency>
+                <groupId>jakarta.inject</groupId>
+                <artifactId>jakarta.inject-api</artifactId>
+                <version>2.0.1</version> <!-- Migrated from javax.inject to jakarta.inject -->
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${org.mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+
+            <!-- Jackson JSON Processor -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-version-databind}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/jakarta.mail/jakarta.mail-api -->
+            <dependency>
+                <groupId>jakarta.mail</groupId>
+                <artifactId>jakarta.mail-api</artifactId>
+                <version>2.0.1</version> <!-- Migrated from javax.mail to jakarta.mail -->
+            </dependency>
+
+            <!-- http://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+            <dependency>
+                <groupId>com.googlecode.json-simple</groupId>
+                <artifactId>json-simple</artifactId>
+                <version>${simple-json-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-jdbc-version}</version>
+            </dependency>
+
+            <!-- For connecting to oracle -->
+            <!-- <dependency> <groupId>com.oracle.database.jdbc</groupId> <artifactId>ojdbc8</artifactId> 
+                <version>${oracle.version}</version> </dependency> -->
+
+
+            <!-- For connecting to postgresql -->
+            <!-- <dependency> <groupId>org.postgresql</groupId> <artifactId>postgresql</artifactId> 
+                <version>${postgresql.version}</version> <scope>runtime</scope> </dependency> -->
+
+            <!-- Google Map API -->
+            <dependency>
+                <groupId>com.google.maps</groupId>
+                <artifactId>google-maps-services</artifactId>
+                <version>${google-client-maps-services-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>kie-ci</artifactId>
+                <version>${drools.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.guava</groupId>
+                        <artifactId>guava</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.drools</groupId>
+                <artifactId>drools-decisiontables</artifactId>
+                <version>${drools.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.drools</groupId>
+                <artifactId>drools-core</artifactId>
+                <version>${drools.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.drools</groupId>
+                <artifactId>drools-compiler</artifactId>
+                <version>${drools.version}</version>
+            </dependency>
+            <!--spring integration -->
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>kie-spring</artifactId>
+                <version>${drools.version}</version>
+            </dependency>
+            <!-- end rules engine -->
+
+            <!-- Infinispan -->
+            <dependency>
+                <groupId>org.infinispan</groupId>
+                <artifactId>infinispan-core</artifactId>
+                <version>${infinispan.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.infinispan</groupId>
+                <artifactId>infinispan-cachestore-jdbc</artifactId>
+                <version>${infinispan.tree.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.infinispan</groupId>
+                <artifactId>infinispan-tree</artifactId>
+                <version>${infinispan.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+
+
+            <!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
+            <dependency>
+                <groupId>commons-validator</groupId>
+                <artifactId>commons-validator</artifactId>
+                <version>${commons-validator.version}</version>
+
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-collections</groupId>
+                        <artifactId>commons-collections</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-s3</artifactId>
+                <version>1.12.258</version> <!-- Latest AWS SDK -->
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-ses -->
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-ses</artifactId>
+                <version>1.12.258</version> <!-- Latest AWS SDK -->
+            </dependency>
+
+            <!-- google cloud storage -->
+            <dependency>
+                <groupId>com.google.cloud</groupId>
+                <artifactId>google-cloud-storage</artifactId>
+                <version>2.4.9</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.guava</groupId>
+                        <artifactId>guava</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- Payment dependencies -->
+
+            <!-- Paypal -->
+            <dependency>
+                <groupId>com.paypal.sdk</groupId>
+                <artifactId>merchantsdk</artifactId>
+                <version>2.15.0</version> <!-- Latest PayPal SDK -->
+            </dependency>
+
+            <!-- Stripe -->
+            <dependency>
+                <groupId>com.stripe</groupId>
+                <artifactId>stripe-java</artifactId>
+                <version>21.2.0</version> <!-- Latest Stripe version -->
+            </dependency>
+
+            <!-- Braintree -->
+            <dependency>
+                <groupId>com.braintreepayments.gateway</groupId>
+                <artifactId>braintree-java</artifactId>
+                <version>3.11.0</version> <!-- Latest Braintree version -->
+            </dependency>
+            
+            <!-- https://mvnrepository.com/artifact/com.maxmind.geoip2/geoip2 -->
+            <dependency>
+                <groupId>com.maxmind.geoip2</groupId>
+                <artifactId>geoip2</artifactId>
+                <version>${geoip2.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+</project>
