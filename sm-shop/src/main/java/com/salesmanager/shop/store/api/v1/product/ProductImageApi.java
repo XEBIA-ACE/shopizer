@@ -8,10 +8,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -277,31 +277,4 @@ public class ProductImageApi {
 			Product p = productService.getById(id);
 			
 			if(p==null) {
-				throw new ResourceNotFoundException("Product image [" + imageId + "] not found for product id [" + id
-						+ "] and merchant [" + merchantStore.getCode() + "]");
-			}
-			
-			if(p.getMerchantStore().getId() != merchantStore.getId()) {
-				throw new ResourceNotFoundException("Product image [" + imageId + "] not found for product id [" + id
-						+ "] and merchant [" + merchantStore.getCode() + "]");
-			}
-			
-			Optional<ProductImage> productImage = productImageService.getProductImage(imageId, id, merchantStore);
-
-			if (productImage.isPresent()) {
-				productImage.get().setSortOrder(position);
-				productImageService.updateProductImage(p, productImage.get());
-			} else {
-				throw new ResourceNotFoundException("Product image [" + imageId + "] not found for product id [" + id
-						+ "] and merchant [" + merchantStore.getCode() + "]");
-			}
-			
-			
-
-		} catch (Exception e) {
-			LOGGER.error("Error while deleting ProductImage", e);
-			throw new ServiceRuntimeException("ProductImage [" + imageId + "] cannot be edited");
-		}
-	}
-
-}
+				throw new ResourceNotFoundException("Product image [" + 
