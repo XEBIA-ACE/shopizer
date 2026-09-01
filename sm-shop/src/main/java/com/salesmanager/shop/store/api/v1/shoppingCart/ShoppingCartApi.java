@@ -6,10 +6,10 @@ import java.security.Principal;
 import java.util.Arrays;
 import java.util.Optional;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -220,84 +220,4 @@ public class ShoppingCartApi {
 	@RequestMapping(value = "/auth/customer/{id}/cart", method = RequestMethod.GET)
 	@ApiOperation(httpMethod = "GET", value = "Get a shopping cart by customer id. Customer must be authenticated", notes = "", produces = "application/json", response = ReadableShoppingCart.class)
 	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
-	public @ResponseBody ReadableShoppingCart getByCustomer(@PathVariable Long id, // customer
-																					// id
-			@RequestParam Optional<String> cart, // cart code
-			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language, HttpServletRequest request,
-			HttpServletResponse response) {
-
-		Principal principal = request.getUserPrincipal();
-
-		// lookup customer
-		Customer customer = customerService.getById(id);
-
-		if (customer == null) {
-			throw new ResourceNotFoundException("No Customer found for id [" + id + "]");
-		}
-
-		customerFacadev1.authorize(customer, principal);
-
-		ReadableShoppingCart readableCart = shoppingCartFacadev1.get(cart, id, merchantStore, language);
-
-		if (readableCart == null) {
-			throw new ResourceNotFoundException("No cart found for customerid [" + id + "]");
-		}
-
-		return readableCart;
-
-	}
-	
-	@ResponseStatus(HttpStatus.OK)
-	@RequestMapping(value = "/auth/customer/cart", method = RequestMethod.GET)
-	@ApiOperation(httpMethod = "GET", value = "Get a shopping cart by authenticated customer", notes = "", produces = "application/json", response = ReadableShoppingCart.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
-	public @ResponseBody ReadableShoppingCart getByCustomer(
-			@RequestParam Optional<String> cart, // cart code
-			@ApiIgnore MerchantStore merchantStore, 
-			@ApiIgnore Language language, 
-			HttpServletRequest request,
-			HttpServletResponse response) {
-
-		Principal principal = request.getUserPrincipal();
-		Customer customer = null;
-		try {
-			customer = customerFacade.getCustomerByUserName(principal.getName(), merchantStore);
-		} catch (Exception e) {
-			throw new ServiceRuntimeException("Exception while getting customer [ " + principal.getName() + "]");
-		}
-		
-		if (customer == null) {
-			throw new ResourceNotFoundException("No Customer found for principal[" + principal.getName() + "]");
-		}
-		
-		customerFacadev1.authorize(customer, principal);
-		ReadableShoppingCart readableCart = shoppingCartFacadev1.get(cart, customer.getId(), merchantStore, language);
-
-		if (readableCart == null) {
-			throw new ResourceNotFoundException("No cart found for customer [" + principal.getName() + "]");
-		}
-
-		return readableCart;
-
-	}
-
-	@DeleteMapping(value = "/cart/{code}/product/{sku}", produces = { APPLICATION_JSON_VALUE })
-	@ApiOperation(httpMethod = "DELETE", value = "Remove a product from a specific cart", notes = "If body set to true returns remaining cart in body, empty cart gives empty body. If body set to false no body ", produces = "application/json", response = ReadableShoppingCart.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en"),
-			@ApiImplicitParam(name = "body", dataType = "boolean", defaultValue = "false"), })
-	public ResponseEntity<ReadableShoppingCart> deleteCartItem(@PathVariable("code") String cartCode,
-			@PathVariable("sku") String sku, 
-			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language,
-			@RequestParam(defaultValue = "false") boolean body) throws Exception {
-
-		ReadableShoppingCart updatedCart = shoppingCartFacade.removeShoppingCartItem(cartCode, sku, merchantStore,
-				language, body);
-		if (body) {
-			return new ResponseEntity<>(updatedCart, HttpStatus.OK);
-		}
-		return new ResponseEntity<>(updatedCart, HttpStatus.NO_CONTENT);
-	}
-}
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en

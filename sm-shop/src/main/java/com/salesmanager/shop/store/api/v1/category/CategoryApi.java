@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.inject.Inject;
-import javax.validation.Valid;
+import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -203,36 +203,4 @@ public class CategoryApi {
 	@ApiOperation(httpMethod = "PUT", value = "Move a category under another category", notes = "Move category {id} under category {parent}")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
 	public void move(
-			@PathVariable Long id,
-			@PathVariable Long parent,
-			@ApiIgnore MerchantStore merchantStore) {
-		// superadmin, admin and admin_catalogue
-		String authenticatedUser = userFacade.authenticatedUser();
-		if (authenticatedUser == null) {
-			throw new UnauthorizedException();
-		}
-
-		userFacade.authorizedGroup(authenticatedUser, Stream.of(Constants.GROUP_SUPERADMIN, Constants.GROUP_ADMIN, Constants.GROUP_ADMIN_CATALOGUE, Constants.GROUP_ADMIN_RETAIL).collect(Collectors.toList()));
-
-
-		categoryFacade.move(id, parent, merchantStore);
-		return;
-	}
-
-	@DeleteMapping(value = "/private/category/{id}", produces = { APPLICATION_JSON_VALUE })
-	@ResponseStatus(OK)
-	public void delete(@PathVariable("id") Long categoryId, @ApiIgnore MerchantStore merchantStore) {
-
-		// superadmin, admin and admin_catalogue
-		String authenticatedUser = userFacade.authenticatedUser();
-		if (authenticatedUser == null) {
-			throw new UnauthorizedException();
-		}
-
-		userFacade.authorizedGroup(authenticatedUser, Stream.of(Constants.GROUP_SUPERADMIN, Constants.GROUP_ADMIN, Constants.GROUP_ADMIN_CATALOGUE, Constants.GROUP_ADMIN_RETAIL).collect(Collectors.toList()));
-
-
-		categoryFacade.deleteCategory(categoryId, merchantStore);
-	}
-
-}
+			@PathVariabl
