@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,16 +52,18 @@ public class CustomerNewsletterApi {
       httpMethod = "POST",
       value = "Creates a newsletter optin",
       notes = "",
-      produces = "application/json")
+      produces = "application/json",
+      response = Void.class)
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en")
+      @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en", paramType = "query")
   })
-  public void create(
+  public ResponseEntity<Void> create(
       @Valid @RequestBody PersistableCustomerOptin optin,
       @ApiIgnore MerchantStore merchantStore,
       @ApiIgnore Language language) {
 		customerFacade.optinCustomer(optin, merchantStore);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
   @PutMapping("/newsletter/{email}")

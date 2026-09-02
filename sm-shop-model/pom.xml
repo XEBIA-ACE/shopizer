@@ -70,7 +70,7 @@
       <artifactId>javax.annotation-api</artifactId>
     </dependency>
 
-    <!-- Swagger 2 documentation -->
+    <!-- Swagger annotations (springfox 3) -->
     <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger2</artifactId>

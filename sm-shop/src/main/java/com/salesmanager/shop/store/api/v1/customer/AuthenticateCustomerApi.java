@@ -94,8 +94,8 @@ public class AuthenticateCustomerApi {
     @RequestMapping( value={"/customer/register"}, method=RequestMethod.POST, produces ={ "application/json" })
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(httpMethod = "POST", value = "Registers a customer to the application", notes = "Used as self-served operation",response = AuthenticationResponse.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-		@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query"),
+		@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en", paramType = "query") })
     @ResponseBody
     public ResponseEntity<?> register(
     		@Valid @RequestBody PersistableCustomer customer, 

@@ -56,8 +56,8 @@ public class ProductVariantGroupApi {
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(value = { "/private/product/productVariantGroup" })
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en", paramType = "query") })
 	public @ResponseBody Entity create(
 			@Valid @RequestBody PersistableProductVariantGroup instanceGroup,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
@@ -158,8 +158,8 @@ public class ProductVariantGroupApi {
 	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(value = { "/private/product/productVariantGroup/{id}/image" }, consumes = {
 			MediaType.MULTIPART_FORM_DATA_VALUE }, method = RequestMethod.POST)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public void addImage(
 			@PathVariable Long id, 
 			@RequestParam(value = "file", required = true) MultipartFile file,

@@ -60,7 +60,7 @@ public class PaymentApi {
 	 */
 	@GetMapping("/private/modules/payment")
 	@ApiOperation(httpMethod = "GET", value = "List list of payment modules", notes = "Requires administration access", produces = "application/json", response = List.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query") })
 	public List<IntegrationModuleSummaryEntity> paymentModules(
 			@ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language) {
@@ -133,7 +133,7 @@ public class PaymentApi {
 	 */
 	@GetMapping("/private/modules/payment/{code}")
 	@ApiOperation(httpMethod = "GET", value = "Payment module by code", produces = "application/json", response = List.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query") })
 	public IntegrationModuleConfiguration paymentModule(@PathVariable String code,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
 

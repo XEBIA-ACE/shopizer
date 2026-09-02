@@ -94,8 +94,8 @@ public class ProductApiV2 {
 	@RequestMapping(value = { "/private/product/inventory" }, 
 			method = RequestMethod.POST)
 	@ApiImplicitParams({ 
-			@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+			@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public @ResponseBody Entity create(
 			@Valid @RequestBody PersistableProduct product,
 			@ApiIgnore MerchantStore merchantStore, 
@@ -117,8 +117,8 @@ public class ProductApiV2 {
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(value = { "/private/product" })
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public @ResponseBody Entity createV2(@Valid @RequestBody PersistableProductDefinition product,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
 
@@ -133,8 +133,8 @@ public class ProductApiV2 {
 
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping(value = { "/private/product/{id}" })
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public void updateV2(@PathVariable Long id, 
 			@Valid @RequestBody PersistableProductDefinition product,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
@@ -145,8 +145,8 @@ public class ProductApiV2 {
 
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value = { "/private/product/{id}" })
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public @ResponseBody ReadableProductDefinition getV2(
 			@PathVariable Long id, 
 			@ApiIgnore MerchantStore merchantStore,
@@ -159,8 +159,8 @@ public class ProductApiV2 {
 	
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = { "/private/product/{id}" }, method = RequestMethod.DELETE)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public void deleteV2(@PathVariable Long id, @ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
 
 		productCommonFacade.deleteProduct(id, merchantStore);
@@ -184,8 +184,8 @@ public class ProductApiV2 {
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Single product found", response = ReadableProduct.class) })
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public ReadableProduct getByfriendlyUrl(
 			@PathVariable final String friendlyUrl,
 			@RequestParam(value = "lang", required = false) String lang, @ApiIgnore MerchantStore merchantStore,
@@ -213,8 +213,8 @@ public class ProductApiV2 {
 	 */
 	@RequestMapping(value = "/products/category/{friendlyUrl}", method = RequestMethod.GET)
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public ReadableProductList list(
 			@RequestParam(value = "lang", required = false) String lang,
 			@PathVariable String friendlyUrl, 
@@ -267,8 +267,8 @@ public class ProductApiV2 {
 	 */
 	@RequestMapping(value = "/products", method = RequestMethod.GET)
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public ReadableProductList list(
 			@RequestParam(value = "lang", required = false) String lang,
 			ProductCriteria searchCriterias,
@@ -310,8 +310,8 @@ public class ProductApiV2 {
 	@ResponseStatus(HttpStatus.OK)
 	@PatchMapping(value = "/private/product/{sku}", produces = { APPLICATION_JSON_VALUE })
 	@ApiOperation(httpMethod = "PATCH", value = "Update product inventory", notes = "Updates product inventory", produces = "application/json", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en", paramType = "query") })
 	public void update(
 			@PathVariable String sku, 
 			@Valid @RequestBody 
@@ -340,8 +340,8 @@ public class ProductApiV2 {
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Single product found", response = ReadableProduct.class) })
 	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public ReadableProduct get(@PathVariable final String sku, 
 			@RequestParam(value = "lang", required = false) String lang,
 			@ApiIgnore MerchantStore merchantStore, 

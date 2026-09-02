@@ -37,8 +37,8 @@ public class OptinApi {
       notes = "",
       produces = "application/json")
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")
   })
   public ReadableOptin create(
       @Valid @RequestBody PersistableOptin optin, 

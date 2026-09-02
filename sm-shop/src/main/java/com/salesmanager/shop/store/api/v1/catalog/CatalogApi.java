@@ -43,8 +43,8 @@ public class CatalogApi {
   @ApiOperation(httpMethod = "GET", value = "Get catalogs by merchant", notes = "",
       response = ReadableEntityList.class)
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")})
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")})
   public ReadableEntityList<ReadableCatalog> getCatalogs(
       @ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language,
       Optional<String> code,
@@ -59,8 +59,8 @@ public class CatalogApi {
   @ResponseStatus(HttpStatus.OK)
   @GetMapping(value = {"/private/catalog/unique"}, produces = MediaType.APPLICATION_JSON_VALUE)
   @ApiImplicitParams({
-    @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-    @ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en")
+    @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query"),
+    @ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en", paramType = "query")
   })
   @ApiOperation(httpMethod = "GET", value = "Check if catalog code already exists", notes = "",
       response = EntityExists.class)
@@ -78,8 +78,8 @@ public class CatalogApi {
   @ApiOperation(httpMethod = "POST", value = "Create catalog", notes = "",
       response = Void.class)
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")})
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")})
   public ReadableCatalog createCatalog(
       @RequestBody @Valid PersistableCatalog catalog,
       @ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
@@ -93,8 +93,8 @@ public class CatalogApi {
   @ApiOperation(httpMethod = "PATCH", value = "Update catalog", notes = "",
       response = Void.class)
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")})
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")})
   public void updateCatalog(
 	  @PathVariable Long id,
       @RequestBody @Valid PersistableCatalog catalog,
@@ -110,8 +110,8 @@ public class CatalogApi {
   @ApiOperation(httpMethod = "GET", value = "Get catalog", notes = "",
       response = Void.class)
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")})
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")})
   public ReadableCatalog getCatalog(
 	  @PathVariable Long id,
       @ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
@@ -126,8 +126,8 @@ public class CatalogApi {
   @ApiOperation(httpMethod = "DELETE", value = "Deletes a catalog", notes = "",
   response = Void.class)
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")})
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")})
   public void deleteCatalog(
       @PathVariable Long id,
       @ApiIgnore MerchantStore merchantStore,
@@ -141,8 +141,8 @@ public class CatalogApi {
   @ApiOperation(httpMethod = "POST", value = "Add catalog entry to catalog", notes = "",
       response = ReadableCatalogCategoryEntry.class)
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")})
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")})
   public ReadableCatalogCategoryEntry addCatalogEntry(
       @PathVariable Long id,
 	  @RequestBody @Valid PersistableCatalogCategoryEntry catalogEntry,
@@ -167,8 +167,8 @@ public class CatalogApi {
   @ApiOperation(httpMethod = "DELETE", value = "Remove catalog entry from catalog", notes = "",
       response = Void.class)
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")})
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")})
   public void removeCatalogEntry(
       @PathVariable Long id,
       @PathVariable Long entryId,
@@ -186,8 +186,8 @@ public class CatalogApi {
   @ApiOperation(httpMethod = "GET", value = "Get catalog entry by catalog", notes = "",
       response = ReadableEntityList.class)
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")})
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")})
   public ReadableEntityList<ReadableCatalogCategoryEntry> getCatalogEntry(
 	  @PathVariable(value="id") Long id,
       @ApiIgnore MerchantStore merchantStore,

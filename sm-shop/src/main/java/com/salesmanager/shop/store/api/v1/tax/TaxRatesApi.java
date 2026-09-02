@@ -56,7 +56,7 @@ public class TaxRatesApi {
 	/** Create new tax rate for a given MerchantStore */
 	@PostMapping("/private/tax/rate")
 	@ApiOperation(httpMethod = "POST", value = "Creates a taxRate", notes = "Requires administration access", produces = "application/json", response = Entity.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query") })
 	public Entity create(@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language,
 			@Valid @RequestBody PersistableTaxRate taxRate) {
 
@@ -66,8 +66,8 @@ public class TaxRatesApi {
 
 	@GetMapping(value = "/private/tax/rate/unique", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(httpMethod = "GET", value = "Verify if taxRate is unique", notes = "", produces = "application/json", response = ResponseEntity.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public ResponseEntity<EntityExists> exists(@RequestParam String code, @ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language) {
 
@@ -79,7 +79,7 @@ public class TaxRatesApi {
 	/** Update tax rate for a given MerchantStore */
 	@PutMapping("/private/tax/rate/{id}")
 	@ApiOperation(httpMethod = "PUT", value = "Updates a taxRate", notes = "Requires administration access", produces = "application/json", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query") })
 	public void update(@ApiIgnore MerchantStore merchantStore, @PathVariable Long id, @ApiIgnore Language language,
 			@Valid @RequestBody PersistableTaxRate taxRate) {
 
@@ -90,8 +90,8 @@ public class TaxRatesApi {
 
 	@GetMapping(value = "/private/tax/rates", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(httpMethod = "GET", value = "List taxRates by store", notes = "", produces = "application/json", response = ReadableEntityList.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public ReadableEntityList<ReadableTaxRate> list(@RequestParam(name = "count", defaultValue = "10") int count,
 			@RequestParam(name = "page", defaultValue = "0") int page, @ApiIgnore MerchantStore merchantStore,
 			@ApiIgnore Language language) {
@@ -102,7 +102,7 @@ public class TaxRatesApi {
 	
 	@GetMapping("/private/tax/rate/{id}")
 	@ApiOperation(httpMethod = "GET", value = "Get a taxRate by code", notes = "Requires administration access", produces = "application/json", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query") })
 	public ReadableTaxRate get(@ApiIgnore MerchantStore merchantStore, @PathVariable Long id, @ApiIgnore Language language) {
 
 		return taxFacade.taxRate(id, merchantStore, language);
@@ -111,8 +111,8 @@ public class TaxRatesApi {
 
 	@DeleteMapping(value = "/private/tax/rate/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(httpMethod = "DELETE", value = "Delete tax rate", notes = "", produces = "application/json", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public void delete(@PathVariable Long id, @ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
 
 		taxFacade.deleteTaxRate(id, merchantStore, language);

@@ -56,8 +56,8 @@ public class ProductReviewApi {
   @ResponseStatus(HttpStatus.CREATED)
   @ResponseBody
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")
   })
   public PersistableProductReview create(
       @PathVariable final Long id,
@@ -104,8 +104,8 @@ public class ProductReviewApi {
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")
   })
   public List<ReadableProductReview> getAll(
       @PathVariable final Long id,
@@ -147,8 +147,8 @@ public class ProductReviewApi {
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")
   })
   public PersistableProductReview update(
       @PathVariable final Long id,
@@ -203,8 +203,8 @@ public class ProductReviewApi {
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")
   })
   public void delete(
       @PathVariable final Long id,
