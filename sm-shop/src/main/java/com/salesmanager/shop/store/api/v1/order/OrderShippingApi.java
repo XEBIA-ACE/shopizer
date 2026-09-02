@@ -81,8 +81,8 @@ public class OrderShippingApi {
       method = RequestMethod.GET)
   @ResponseBody
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")
   })
   public ReadableShippingSummary shipping(
       @PathVariable final String code,
@@ -192,8 +192,8 @@ public class OrderShippingApi {
       method = RequestMethod.POST)
   @ResponseBody
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")
   })
   public ReadableShippingSummary shipping(
       @PathVariable final String code,

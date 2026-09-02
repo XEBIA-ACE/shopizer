@@ -81,8 +81,8 @@ public class ContentAdministrationApi {
 	 * @throws Exception
 	 */
 	@GetMapping(value = "/private/content/list", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public List<ImageFile> list(@RequestParam(value = "parentPath", required = false) String path,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) throws Exception {
 
@@ -103,8 +103,8 @@ public class ContentAdministrationApi {
 	 * @throws Exception
 	 */
 	@GetMapping(value = "/private/content/folder", produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public ContentFolder folder(
 			@RequestParam(value = "path", required = false) String path,
 			@ApiIgnore MerchantStore merchantStore, 
@@ -123,8 +123,8 @@ public class ContentAdministrationApi {
 	@PostMapping(value = "/private/content/images/add", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+			@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public FileStatus upload(
 			@RequestParam(value = "qqfile", required = true) MultipartFile qqfile,
 			@RequestParam(value = "qquuid", required = true) String qquuid,
@@ -162,8 +162,8 @@ public class ContentAdministrationApi {
 	}
 	
 	@GetMapping(value = "/content/images/download")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public @ResponseBody String download(
 			@RequestParam(value = "path", required = true) String path,
 			@ApiIgnore MerchantStore merchantStore, 
@@ -186,8 +186,8 @@ public class ContentAdministrationApi {
 	@PostMapping(value = "/private/content/images/rename", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+			@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public FileStatus rename(
 			@RequestParam(value = "path", required = true) String path,
 			@RequestParam(value = "newName", required = true) String newName,
@@ -213,8 +213,8 @@ public class ContentAdministrationApi {
 	@DeleteMapping(value = "/private/content/images/remove", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+			@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public FileStatus remove(
 			@RequestParam(value = "path", required = true) String path,
 			@ApiIgnore MerchantStore merchantStore, 

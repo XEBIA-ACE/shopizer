@@ -26,7 +26,7 @@ Headless commerce and Rest api for ecommerce
 Shopizer Headless commerce consists of the following components:
 
 
-Access the headless api: http://localhost:8080/swagger-ui.html
+Access the headless api: http://localhost:8080/swagger-ui/index.html
 
 
 See the demo: [**New demo on the way 2025]
@@ -99,7 +99,7 @@ Form compiling and running Shopizer admin consult the repo README file
 ### Access the application:
 -------------------
 
-Access the headless web application at: http://localhost:8080/swagger-ui.html
+Access the headless web application at: http://localhost:8080/swagger-ui/index.html
 
 
 The instructions above will let you run the application with default settings and configurations.

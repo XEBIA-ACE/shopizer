@@ -95,8 +95,8 @@ public class MarketPlaceApi {
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value = { "/store/{store}/signup/{token}" }, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(httpMethod = "GET", value = "Validate store signup token", notes = "", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public void storeSignupVerify(@PathVariable String store, @PathVariable String token,
 			@ApiIgnore MerchantStore merchantStore, 
 			@ApiIgnore Language language) {

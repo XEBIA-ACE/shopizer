@@ -77,8 +77,8 @@ public class OrderTotalApi {
       method = RequestMethod.GET)
   @ResponseBody
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")
   })
   public ReadableOrderTotalSummary payment(
       @PathVariable final Long id,
@@ -167,8 +167,8 @@ public class OrderTotalApi {
       method = RequestMethod.GET)
   @ResponseBody
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en")
+      @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+      @ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query")
   })
   public ReadableOrderTotalSummary calculateTotal(
       @PathVariable final String code,

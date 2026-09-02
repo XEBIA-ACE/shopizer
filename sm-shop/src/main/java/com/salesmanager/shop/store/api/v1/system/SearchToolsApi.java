@@ -50,8 +50,8 @@ public class SearchToolsApi {
 
 	@PostMapping("/private/system/search/index")
 	@ApiOperation(httpMethod = "POST", value = "Indexes all products", notes = "", produces = "application/json")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public ResponseEntity<Void> contact(@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language, HttpServletRequest request) {
 
 		// superadmin, admin and admin_catalogue

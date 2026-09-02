@@ -36,7 +36,7 @@ public class ConfigurationsApi {
 	      produces = "application/json",
 	      response = Void.class)
 	  @ApiImplicitParams({
-	      @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT")
+	      @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query")
 	  })
 	  public Void create(
 	      @ApiIgnore MerchantStore merchantStore,
@@ -56,7 +56,7 @@ public class ConfigurationsApi {
 	      produces = "application/json",
 	      response = List.class)
 	  @ApiImplicitParams({
-	      @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT")
+	      @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query")
 	  })
 	  public List<ReadableConfiguration> listPaymentConfigurations(
 	      @ApiIgnore MerchantStore merchantStore,
@@ -78,7 +78,7 @@ public class ConfigurationsApi {
 	      produces = "application/json",
 	      response = List.class)
 	  @ApiImplicitParams({
-	      @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT")
+	      @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query")
 	  })
 	  public List<ReadableConfiguration> listShippingConfigurations(
 	      @ApiIgnore MerchantStore merchantStore,

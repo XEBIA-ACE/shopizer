@@ -81,8 +81,8 @@ public class UserApi {
 			@ApiResponse(code = 200, message = "Success", responseContainer = "User", response = ReadableUser.class),
 			@ApiResponse(code = 400, message = "Error while getting User"),
 			@ApiResponse(code = 401, message = "Login required") })
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en", paramType = "query") })
 	public ReadableUser get(@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language, @PathVariable Long id,
 			HttpServletRequest request) {
 
@@ -106,8 +106,8 @@ public class UserApi {
 	@ResponseStatus(HttpStatus.OK)
 	@PostMapping(value = { "/private/user/" }, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(httpMethod = "POST", value = "Creates a new user", notes = "", response = ReadableUser.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public ReadableUser create(
 			@ApiIgnore MerchantStore merchantStore, 
 			@ApiIgnore Language language,
@@ -133,8 +133,8 @@ public class UserApi {
 
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping(value = { "/private/user/{id}" }, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	@ApiOperation(httpMethod = "PUT", value = "Updates a user", notes = "", response = ReadableUser.class)
 	public ReadableUser update(@Valid @RequestBody PersistableUser user, @PathVariable Long id,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language
@@ -167,8 +167,8 @@ public class UserApi {
 	@GetMapping(value = { "/private/users" }, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(httpMethod = "GET", value = "Get list of user", notes = "", response = ReadableUserList.class)
 	@ApiImplicitParams({ 
-		@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-		@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
+		@ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT", paramType = "query"),
+		@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en", paramType = "query") })
 	public ReadableUserList list(
 			@ApiIgnore MerchantStore merchantStore, 
 			@ApiIgnore Language language,
@@ -200,7 +200,7 @@ public class UserApi {
 	}
 	
 	@PatchMapping(value = "/private/user/{id}/enabled", produces = { APPLICATION_JSON_VALUE })
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query") })
 	public void updateEnabled(
 			@PathVariable Long id, 
 			@Valid @RequestBody PersistableUser user,
@@ -222,8 +222,8 @@ public class UserApi {
 	@ResponseStatus(HttpStatus.OK)
 	@DeleteMapping(value = { "/private/user/{id}" })
 	@ApiOperation(httpMethod = "DELETE", value = "Deletes a user", notes = "", response = Void.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT", paramType = "query"),
+			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en", paramType = "query") })
 	public void delete(@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language, @PathVariable Long id,
 			HttpServletRequest request) {
 
@@ -268,7 +268,7 @@ public class UserApi {
 	 * @return
 	 */
 	@GetMapping("/private/user/profile")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en", paramType = "query") })
 	public ReadableUser getAuthUser(@ApiIgnore Language language, HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
 		String userName = principal.getName();
