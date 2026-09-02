@@ -43,8 +43,9 @@
 		<shopizer.search.version>2.11.1</shopizer.search.version>
 		<shopizer-canadapost.version>2.15.0</shopizer-canadapost.version>
 
-		<!-- TODO replace with starter -->
-		<elasticsearch.version>7.5.2</elasticsearch.version>
+		<!-- Overrides the Elasticsearch version managed by spring-boot-dependencies.
+			 Search itself is provided by shopizer-search-opensearch-spring-boot-starter -->
+		<elasticsearch.version>8.10.0</elasticsearch.version>
 		<guava.version>27.1-jre</guava.version>
 		<commons-lang.version>3.5</commons-lang.version>
 		<commons-io.version>2.7</commons-io.version>
@@ -437,8 +438,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-		<!-- Elastic search TODO replace with starter-->
 
 		<dependency>
 			<groupId>mysql</groupId>
