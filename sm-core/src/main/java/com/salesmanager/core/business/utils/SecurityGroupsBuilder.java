@@ -9,8 +9,7 @@ import com.salesmanager.core.model.user.Permission;
 
 /**
  * Helper for building security groups and permissions
- * @author carlsamson
- *
+ * 
  */
 public class SecurityGroupsBuilder {
 	

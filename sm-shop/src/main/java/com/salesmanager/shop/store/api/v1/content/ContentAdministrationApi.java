@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -272,92 +272,4 @@ public class ContentAdministrationApi {
 		/**
 		 * 
 		 */
-		private static final long serialVersionUID = 1L;
-		private boolean success = true;
-		private String error = null;
-		private boolean preventRetry = true;
-		public boolean isSuccess() {
-			return success;
-		}
-		public void setSuccess(boolean success) {
-			this.success = success;
-		}
-		public String getError() {
-			return error;
-		}
-		public void setError(String error) {
-			this.error = error;
-		}
-		public boolean isPreventRetry() {
-			return preventRetry;
-		}
-		public void setPreventRetry(boolean preventRetry) {
-			this.preventRetry = preventRetry;
-		}
-		
-	}
-	
-	
-	class ImageFile implements Serializable {
-
-		public String getUrl() {
-			return url;
-		}
-
-		public void setUrl(String url) {
-			this.url = url;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public String getSize() {
-			return size;
-		}
-
-		public void setSize(String size) {
-			this.size = size;
-		}
-
-		public boolean isDir() {
-			return dir;
-		}
-
-		public void setDir(boolean dir) {
-			this.dir = dir;
-		}
-
-		public String getPath() {
-			return path;
-		}
-
-		public void setPath(String path) {
-			this.path = path;
-		}
-
-		public String getId() {
-			return id;
-		}
-
-		public void setId(String id) {
-			this.id = id;
-		}
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		private String url;
-		private String name;
-		private String size;
-		private boolean dir;
-		private String path;
-		private String id;
-	}
-
-}
+		pri

@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -246,117 +246,4 @@ public class OrderPaymentApi {
 
 		try {
 
-			// if startdate or enddate are null use default range (last 24
-			// hours) DD-1 to DD
-			Calendar cal = Calendar.getInstance();
-			Date sDate = null;
-
-			if (startDate != null) {
-				sDate = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-			} else {
-				cal.add(Calendar.DATE, -1);
-				sDate = cal.getTime();
-			}
-
-			Date eDate = null;
-
-			if (endDate != null) {
-				eDate = Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-			} else {
-				eDate = new Date();
-			}
-
-			ReadableOrderList returnList = orderFacade.getCapturableOrderList(merchantStore, sDate, eDate, language);
-
-			return returnList;
-
-		} catch (Exception e) {
-			LOGGER.error("Error while getting capturable payments", e);
-			try {
-				response.sendError(503, "Error while getting capturable payments " + e.getMessage());
-			} catch (Exception ignore) {
-			}
-			return null;
-		}
-	}
-
-	/**
-	 * Capture payment transaction for a given order id
-	 *
-	 * @param id
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value = { "/private/orders/{id}/capture" }, method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
-	public ReadableTransaction capturePayment(@PathVariable Long id, @ApiIgnore MerchantStore merchantStore,
-			@ApiIgnore Language language) {
-		/*
-		 * try {
-		 * 
-		 * // need order Order order = orderService.getById(id);
-		 * 
-		 * if (order == null) { response.sendError(404, "Order id " + id +
-		 * " does not exist"); return null; }
-		 * 
-		 * // need customer Customer customer =
-		 * customerService.getById(order.getCustomerId());
-		 * 
-		 * if (customer == null) { response.sendError(404, "Order id " + id +
-		 * " contains an invalid customer " + order.getCustomerId()); return
-		 * null; }
-		 * 
-		 * ReadableTransaction transaction =
-		 * orderFacade.captureOrder(merchantStore, order, customer, language);
-		 * 
-		 * return transaction;
-		 * 
-		 * } catch (Exception e) { LOGGER.error("Error while capturing payment",
-		 * e); try { response.sendError(503, "Error while capturing payment " +
-		 * e.getMessage()); } catch (Exception ignore) { } return null; }
-		 */
-
-		return null;
-	}
-
-	/**
-	 * Refund payment
-	 * 
-	 * @param id
-	 * @param merchantStore
-	 * @param language
-	 * @return
-	 */
-	@RequestMapping(value = { "/private/orders/{id}/refund" }, method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
-	public ReadableTransaction refundPayment(@PathVariable Long id, @ApiIgnore MerchantStore merchantStore,
-			@ApiIgnore Language language) {
-		return null;
-	}
-
-	/**
-	 * Capture payment
-	 * 
-	 * @param id
-	 * @param merchantStore
-	 * @param language
-	 * @return
-	 */
-	@RequestMapping(value = { "/private/orders/{id}/authorize" }, method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
-			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
-	public ReadableTransaction authorizePayment(@PathVariable Long id, @ApiIgnore MerchantStore merchantStore,
-			@ApiIgnore Language language) {
-		return null;
-	}
-}
+			// if startdate or enddate 

@@ -1,0 +1,83 @@
+## Mandatory Upgrade Coverage
+- [ ] **UPG-001: Upgrade Spring Boot 2.5.12 → 3.2.2**
+  - Source: Selected Upgrade Option
+  - Acceptance: Implemented change is verified by relevant build and test checks.
+  - Estimate: Allocate within the selected option's total effort after repository impact review.
+- [ ] **UPG-002: Upgrade Elasticsearch 7.5.2 → latest compatible version**
+  - Source: Selected Upgrade Option
+  - Acceptance: Implemented change is verified by relevant build and test checks.
+  - Estimate: Allocate within the selected option's total effort after repository impact review.
+- [ ] **UPG-003: Upgrade Guava 27.1-jre → latest compatible version**
+  - Source: Selected Upgrade Option
+  - Acceptance: Implemented change is verified by relevant build and test checks.
+  - Estimate: Allocate within the selected option's total effort after repository impact review.
+- [ ] **UPG-004: Upgrade Jackson Databind 2.13.4.1 → latest compatible version**
+  - Source: Selected Upgrade Option
+  - Acceptance: Implemented change is verified by relevant build and test checks.
+  - Estimate: Allocate within the selected option's total effort after repository impact review.
+- [ ] **UPG-005: Upgrade Commons Lang 3.5 → latest compatible version**
+  - Source: Selected Upgrade Option
+  - Acceptance: Implemented change is verified by relevant build and test checks.
+  - Estimate: Allocate within the selected option's total effort after repository impact review.
+- [ ] **VER-006: Pin an exact target for Upgrade Elasticsearch**
+  - Current selected target: `latest compatible version`
+  - Acceptance: An exact compatible version is selected and its compatibility evidence is recorded before manifest changes.
+  - Estimate: Include within the selected option's total effort.
+- [ ] **VER-007: Pin an exact target for Upgrade Guava**
+  - Current selected target: `latest compatible version`
+  - Acceptance: An exact compatible version is selected and its compatibility evidence is recorded before manifest changes.
+  - Estimate: Include within the selected option's total effort.
+- [ ] **VER-008: Pin an exact target for Upgrade Jackson Databind**
+  - Current selected target: `latest compatible version`
+  - Acceptance: An exact compatible version is selected and its compatibility evidence is recorded before manifest changes.
+  - Estimate: Include within the selected option's total effort.
+- [ ] **VER-009: Pin an exact target for Upgrade Commons Lang**
+  - Current selected target: `latest compatible version`
+  - Acceptance: An exact compatible version is selected and its compatibility evidence is recorded before manifest changes.
+  - Estimate: Include within the selected option's total effort.
+
+---
+
+- [ ] **Task 1: Inventory Current Dependencies**
+  - *Objective*: Review and list all current framework and library dependencies.
+  - *Components/Files*: `pom.xml` _(Unverified: no Code Insights evidence ID supplied.)_
+  - *Implementation*: Guided by tools, identify the current state of dependencies.
+  - *Acceptance Criteria*: Complete list of dependencies documented.
+  - *Risk*: Low
+  - *Estimate*: 1 person-day
+
+- [ ] **Task 2: Upgrade Spring Boot Framework**
+  - *Objective*: Transition Spring Boot version
+  - *Dependencies*: Task 1
+  - *Components/Files*: All Java source files, `pom.xml` _(Unverified: no Code Insights evidence ID supplied.)_
+  - *Implementation*: Modify `pom.xml` to use Spring Boot 3.2.2. _(Unverified: no Code Insights evidence ID supplied.)_
+  - *Acceptance Criteria*: Application should compile without errors.
+  - *Risk*: Medium
+  - *Estimate*: 2 person-days
+
+- [ ] **Task 3: Update Elasticsearch**
+  - *Objective*: Identify compatibility requirements and update version
+  - *Dependencies*: Task 1
+  - *Components/Files*: Elasticsearch specific modules
+  - *Implementation*: Adjust code and configurations for updated Elasticsearch compatibility.
+  - *Acceptance Criteria*: No Elasticsearch related errors.
+  - *Risk*: High
+  - *Estimate*: 4 person-days
+
+- [ ] **Task 4: Revise Test Coverage**
+  - *Objective*: Ensure test coverage is compatible with new versions
+  - *Dependencies*: Tasks 2 and 3
+  - *Components/Files*: Test files
+  - *Implementation*: Update and add new tests to reflect version upgrades.
+  - *Acceptance Criteria*: All tests pass after the upgrade.
+  - *Risk*: Medium
+  - *Estimate*: 4 person-days
+
+- [ ] **Task 5: Conduct Component Testing**
+  - *Objective*: Test all impacted areas for regressions.
+  - *Dependencies*: Task 4
+  - *Components/Files*: All impacted source files
+  - *Implementation*: Execute full suite of tests, check for any regressions.
+  - *Acceptance Criteria*: 100% pass rate, no new issues
+  - *Risk*: Medium
+  - *Estimate*: 3 person-days
