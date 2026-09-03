@@ -1,0 +1,17 @@
+```xml
+<beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+    <beans:property name="basename" value="classpath:messages"/>
+    <beans:property name="defaultEncoding" value="UTF-8"/>
+</beans:bean>
+
+<mvc:interceptors>
+    <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <beans:property name="paramName" value="language"/>
+    </beans:bean>
+</mvc:interceptors>
+
+<beans:bean id="localeResolver" 
+    class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
+```
+
+This implementation introduces support for multilingual display in the product and customer views of the Shopizer application by using Java's ResourceBundle for internationalization and a simple language selection form for end users. It assumes server-side session management to persist language preferences.
