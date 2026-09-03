@@ -1,0 +1,14 @@
+```css
+.App {
+  font-family: 'Arial', sans-serif;
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 600px;
+}
+
+@media (max-width: 768px) {
+  .App {
+    padding: 10px;
+  }
+}
+```
