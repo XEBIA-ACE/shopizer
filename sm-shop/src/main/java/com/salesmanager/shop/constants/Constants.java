@@ -13,6 +13,7 @@ public class Constants {
     public final static String DEFAULT_LANGUAGE = "en";
 	public final static String LANGUAGE = "LANGUAGE";
 	public final static String LOCALE = "LOCALE";
+	public final static String CURRENCY = "CURRENCY";
 	public final static String LANG = "lang";
 	public final static String BREADCRUMB = "BREADCRUMB";
 
