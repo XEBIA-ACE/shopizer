@@ -3,9 +3,9 @@ package com.salesmanager.shop.store.api.v1.customer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 import org.apache.commons.lang3.Validate;
 import org.apache.http.auth.AuthenticationException;
@@ -222,25 +222,4 @@ public class AuthenticateCustomerApi {
             MerchantStore merchantStore = storeFacade.getByCode(request);
 
             Customer customer = customerFacade.getCustomerByUserName(passwordRequest.getUsername(), merchantStore);
-            
-            if(customer == null){
-                return ResponseEntity.notFound().build();
-            }
-            
-            //need to validate if password matches
-            if(!customerFacade.passwordMatch(passwordRequest.getCurrent(), customer)) {
-              throw new ResourceNotFoundException("Username or password does not match");
-            }
-            
-            if(!passwordRequest.getPassword().equals(passwordRequest.getRepeatPassword())) {
-              throw new ResourceNotFoundException("Both passwords do not match");
-            }
-            
-            customerFacade.changePassword(customer, passwordRequest.getPassword());           
-            return ResponseEntity.ok(Void.class);
-            
-        } catch(Exception e) {
-            return ResponseEntity.badRequest().body("Exception when reseting password "+e.getMessage());
-        }
-    }
-}
+  
