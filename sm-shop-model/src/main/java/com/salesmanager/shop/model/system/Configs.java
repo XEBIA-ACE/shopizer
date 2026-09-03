@@ -12,7 +12,7 @@ public class Configs {
 	private boolean displayContactUs;
 	private boolean displayShipping;
 
-	private boolean displayCustomerSection =false;
+	private boolean displayCustomerSection = false;
 	private boolean displayAddToCartOnFeaturedItems = false;
 	private boolean displayCustomerAgreement = false;
 	private boolean displayPagesMenu = true;
