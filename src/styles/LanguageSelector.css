@@ -1,0 +1,20 @@
+```css
+.language-selector {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.language-selector label {
+  margin-right: 8px;
+}
+
+.language-selector select {
+  padding: 4px;
+  font-size: 1rem;
+}
+```
+
+Integrate the CSS in the `LanguageSelector` component or your global CSS file as needed.
+
+This implementation provides the UI components needed for language selection and ensures they are integrated into the application's navigation. The logic for persisting user selection utilizes the browser's local storage, which can easily be swapped for a backend API integration if needed.

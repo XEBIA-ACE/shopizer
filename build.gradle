@@ -1,0 +1,7 @@
+```gradle
+dependencies {
+    implementation 'org.springframework:spring-context'
+    implementation 'javax.servlet:jstl'
+    // Ensure other required dependencies are included
+}
+```
