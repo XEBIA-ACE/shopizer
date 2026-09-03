@@ -25,13 +25,10 @@ import com.salesmanager.shop.model.system.IntegrationModuleSummaryEntity;
 import com.salesmanager.shop.store.api.exception.ResourceNotFoundException;
 import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.SwaggerDefinition;
-import io.swagger.annotations.Tag;
-import springfox.documentation.annotations.ApiIgnore;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.api.annotations.ParameterObject;
 
 /**
  * This API is for payment modules configurations. For payment of orders see
@@ -42,8 +39,7 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @RestController
 @RequestMapping(value = "/api/v1")
-@Api(tags = { "Payment api" })
-@SwaggerDefinition(tags = { @Tag(name = "Payment management resources", description = "Payment management resources") })
+@Tag(name = "Payment api", description = "Payment management resources")
 public class PaymentApi {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PaymentApi.class);
@@ -59,11 +55,11 @@ public class PaymentApi {
 	 * @return
 	 */
 	@GetMapping("/private/modules/payment")
-	@ApiOperation(httpMethod = "GET", value = "List list of payment modules", notes = "Requires administration access", produces = "application/json", response = List.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@Operation(summary = "List list of payment modules", description = "Requires administration access")
+	@Parameter(name = "store", description = "Store code", required = false, example = "DEFAULT")
 	public List<IntegrationModuleSummaryEntity> paymentModules(
-			@ApiIgnore MerchantStore merchantStore,
-			@ApiIgnore Language language) {
+			@ParameterObject MerchantStore merchantStore,
+			@ParameterObject Language language) {
 
 		try {
 			List<IntegrationModule> modules = paymentService.getPaymentMethods(merchantStore);
@@ -83,7 +79,7 @@ public class PaymentApi {
 	@PostMapping(value = "/private/modules/payment")
 	public void configure(
 			@RequestBody IntegrationModuleConfiguration configuration,
-			@ApiIgnore MerchantStore merchantStore) {
+			@ParameterObject MerchantStore merchantStore) {
 		
 		try {
 			
@@ -132,10 +128,10 @@ public class PaymentApi {
 	 * @return
 	 */
 	@GetMapping("/private/modules/payment/{code}")
-	@ApiOperation(httpMethod = "GET", value = "Payment module by code", produces = "application/json", response = List.class)
-	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT") })
+	@Operation(summary = "Payment module by code")
+	@Parameter(name = "store", description = "Store code", required = false, example = "DEFAULT")
 	public IntegrationModuleConfiguration paymentModule(@PathVariable String code,
-			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
+			@ParameterObject MerchantStore merchantStore, @ParameterObject Language language) {
 
 		try {
 			
