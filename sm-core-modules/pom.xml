@@ -4,13 +4,11 @@
   xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
 
-
   <parent>
     <groupId>com.shopizer</groupId>
     <artifactId>shopizer</artifactId>
     <version>3.2.3</version>
   </parent>
-
 
   <name>sm-core-modules</name>
   <artifactId>sm-core-modules</artifactId>
@@ -60,6 +58,7 @@
       <groupId>com.shopizer</groupId>
       <artifactId>sm-core-model</artifactId>
     </dependency>
+    <!-- TODO: Update to the latest compatible version as per the specification -->
   </dependencies>
 
   <build>
@@ -102,8 +101,6 @@
         </executions>
       </plugin>
       
-      
-	
       		<plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-javadoc-plugin</artifactId>
