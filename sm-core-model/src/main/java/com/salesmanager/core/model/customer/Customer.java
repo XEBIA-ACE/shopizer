@@ -45,6 +45,7 @@ import com.salesmanager.core.model.common.audit.Auditable;
 import com.salesmanager.core.model.customer.attribute.CustomerAttribute;
 import com.salesmanager.core.model.generic.SalesManagerEntity;
 import com.salesmanager.core.model.merchant.MerchantStore;
+import com.salesmanager.core.model.reference.currency.Currency;
 import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.core.model.user.Group;
 import com.salesmanager.core.utils.CloneUtils;
@@ -111,6 +112,11 @@ public class Customer extends SalesManagerEntity<Long, Customer> implements Audi
 	@JoinColumn(name = "LANGUAGE_ID", nullable=false)
 	private Language defaultLanguage;
 	
+
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Currency.class)
+	@JoinColumn(name = "CURRENCY_ID", nullable=true)
+	private Currency preferredCurrency;
+
 
 	@OneToMany(mappedBy = "customer", targetEntity = ProductReview.class)
 	private List<ProductReview> reviews = new ArrayList<ProductReview>();
@@ -295,6 +301,14 @@ public class Customer extends SalesManagerEntity<Long, Customer> implements Audi
 
 	public void setDefaultLanguage(Language defaultLanguage) {
 		this.defaultLanguage = defaultLanguage;
+	}
+
+	public Currency getPreferredCurrency() {
+		return preferredCurrency;
+	}
+
+	public void setPreferredCurrency(Currency preferredCurrency) {
+		this.preferredCurrency = preferredCurrency;
 	}
 
 	public void setAttributes(Set<CustomerAttribute> attributes) {
