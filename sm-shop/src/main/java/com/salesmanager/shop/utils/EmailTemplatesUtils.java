@@ -18,6 +18,7 @@ import com.salesmanager.core.model.reference.zone.Zone;
 import com.salesmanager.shop.constants.ApplicationConstants;
 import com.salesmanager.shop.constants.EmailConstants;
 import com.salesmanager.shop.model.customer.PersistableCustomer;
+import com.salesmanager.shop.model.onboarding.OnboardingCustomerProfile;
 import com.salesmanager.shop.model.shop.ContactForm;
 import org.apache.commons.lang3.StringUtils;
 
@@ -493,6 +494,36 @@ public class EmailTemplatesUtils {
 	           LOGGER.error("Error occured while sending change password email ",e);
 	       }
 		
+	}
+
+	/**
+	 * Sends the onboarding completion confirmation to the customer. Failures propagate so the
+	 * caller can keep the confirmation pending and retry later.
+	 */
+	public void sendOnboardingConfirmationEmail(OnboardingCustomerProfile profile, MerchantStore merchantStore,
+			Locale customerLocale, String contextPath) throws Exception {
+		LOGGER.debug("Sending onboarding confirmation email");
+
+		Map<String, String> templateTokens = emailUtils.createEmailObjectsMap(contextPath, merchantStore, messages,
+				customerLocale);
+
+		templateTokens.put(EmailConstants.LABEL_HI, messages.getMessage("label.generic.hi", customerLocale));
+		templateTokens.put(EmailConstants.EMAIL_CUSTOMER_FIRSTNAME, profile.getName());
+		templateTokens.put(EmailConstants.EMAIL_CUSTOMER_LASTNAME, "");
+
+		String[] args = { profile.getAccountType(), DateUtil.formatLongDate(new Date()) };
+		templateTokens.put(EmailConstants.EMAIL_NOTIFICATION_MESSAGE,
+				messages.getMessage("label.notification.message.onboardingconfirmed", args, customerLocale));
+
+		Email email = new Email();
+		email.setFrom(merchantStore.getStorename());
+		email.setFromEmail(merchantStore.getStoreEmailAddress());
+		email.setSubject(messages.getMessage("label.notification.title.onboardingconfirmed", customerLocale));
+		email.setTo(profile.getEmail());
+		email.setTemplateName(EmailConstants.EMAIL_NOTIFICATION_TMPL);
+		email.setTemplateTokens(templateTokens);
+
+		emailService.sendHtmlEmail(merchantStore, email);
 	}
 
 }
