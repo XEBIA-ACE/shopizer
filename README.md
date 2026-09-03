@@ -106,6 +106,17 @@ The instructions above will let you run the application with default settings an
 Please read the instructions on how to connect to MySQL, configure an email server and configure other subsystems
 
 
+### Customer onboarding workflow:
+-------------------
+
+Multi-channel (ONLINE, MOBILE, BRANCH) customer onboarding is exposed under `/api/v1/onboarding`:
+
+- `POST /api/v1/onboarding` initiates a workflow from a `customerProfile` (`name`, `email`, `phone`, `accountType`, `documentation`) and an optional `channel`; returns the `workflowId`.
+- `POST /api/v1/onboarding/{workflowId}/documentation` submits documents; the workflow reports `missingDocumentation` against the configurable `onboarding.documentation.required` list (default `IDENTITY,PROOF_OF_ADDRESS`).
+- `POST /api/v1/onboarding/{workflowId}/channel` continues the same workflow on another channel without restarting or re-entering data.
+- `POST /api/v1/onboarding/confirmation` completes the application (rejected while documentation is missing) and sends the confirmation email asynchronously; undelivered confirmations are retried every `onboarding.confirmation.retry.delay.ms` (default 60000).
+- `GET /api/v1/onboarding/{workflowId}` returns the workflow status and its audit trail; every interaction is also logged under the `ONBOARDING_AUDIT` logger.
+
 ### Documentation:
 -------------------
 
