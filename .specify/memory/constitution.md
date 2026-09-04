@@ -1,0 +1,4 @@
+- **Quality Standards**: Adhere closely to Java and Spring best practices throughout all changes.
+- **Testing Excellence**: No deployment without full integration test coverage ensuring service integrity.
+- **Backward Compatibility**: All changes should preserve existing provided APIs, ensuring zero-downtime during upgrades.
+- **Code Review Protocols**: Intensive peer reviews mandated for all code changes related to Elasticsearch interactions.
