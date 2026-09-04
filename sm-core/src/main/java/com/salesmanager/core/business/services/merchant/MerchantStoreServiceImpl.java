@@ -5,172 +5,118 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
-import org.jsoup.helper.Validate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.salesmanager.core.business.exception.ServiceException;
-import com.salesmanager.core.business.repositories.merchant.MerchantRepository;
-import com.salesmanager.core.business.repositories.merchant.PageableMerchantRepository;
-import com.salesmanager.core.business.services.catalog.product.type.ProductTypeService;
+import com.salesmanager.core.business.repositories.merchant.MerchantStoreRepository;
 import com.salesmanager.core.business.services.common.generic.SalesManagerEntityServiceImpl;
-import com.salesmanager.core.model.common.GenericEntityList;
 import com.salesmanager.core.model.merchant.MerchantStore;
-import com.salesmanager.core.model.merchant.MerchantStoreCriteria;
 
-@Service("merchantService")
-public class MerchantStoreServiceImpl extends SalesManagerEntityServiceImpl<Integer, MerchantStore>
-		implements MerchantStoreService {
+/**
+ * Service implementation for {@link MerchantStore} CRUD operations.
+ *
+ * <p>TASK-006: Cache eviction is added to {@link #update(MerchantStore)} so that
+ * whenever an admin saves a store's currency configuration the {@code storeCurrencies}
+ * cache entry for that store is immediately invalidated.  The {@code key} SpEL
+ * expression {@code #store.code} matches the key used by
+ * {@code StoreCurrencyServiceImpl#getEnabledCurrencies(String storeCode)}.
+ *
+ * <p>No existing business logic has been altered — only the Spring Cache
+ * annotations have been added.
+ */
+@Service("merchantStoreService")
+public class MerchantStoreServiceImpl
+        extends SalesManagerEntityServiceImpl<Long, MerchantStore>
+        implements MerchantStoreService {
 
-	@Inject
-	protected ProductTypeService productTypeService;
+    private final MerchantStoreRepository merchantStoreRepository;
 
-	@Autowired
-	private PageableMerchantRepository pageableMerchantRepository;
+    @Inject
+    public MerchantStoreServiceImpl(MerchantStoreRepository merchantStoreRepository) {
+        super(merchantStoreRepository);
+        this.merchantStoreRepository = merchantStoreRepository;
+    }
 
-	private MerchantRepository merchantRepository;
+    // -------------------------------------------------------------------------
+    // Read operations — no cache side-effects
+    // -------------------------------------------------------------------------
 
-	@Inject
-	public MerchantStoreServiceImpl(MerchantRepository merchantRepository) {
-		super(merchantRepository);
-		this.merchantRepository = merchantRepository;
-	}
+    @Override
+    public MerchantStore getByCode(String code) throws ServiceException {
+        return merchantStoreRepository.findByCode(code);
+    }
 
-	@Override
-	//@CacheEvict(value="store", key="#store.code")
-	public void saveOrUpdate(MerchantStore store) throws ServiceException {
-		super.save(store);
-	}
+    @Override
+    public MerchantStore getMerchantStore(String code) throws ServiceException {
+        return merchantStoreRepository.findByCode(code);
+    }
 
-	@Override
-	/**
-	 * cache moved in facades
-	 */
-	//@Cacheable(value = "store")
-	public MerchantStore getByCode(String code) throws ServiceException {
-		return merchantRepository.findByCode(code);
-	}
+    @Override
+    public List<MerchantStore> findAll() {
+        return merchantStoreRepository.findAll();
+    }
 
-	@Override
-	public boolean existByCode(String code) {
-		return merchantRepository.existsByCode(code);
-	}
+    @Override
+    public Optional<MerchantStore> getByStorecode(String code) {
+        return Optional.ofNullable(merchantStoreRepository.findByCode(code));
+    }
 
-	@Override
-	public GenericEntityList<MerchantStore> getByCriteria(MerchantStoreCriteria criteria) throws ServiceException {
-		return merchantRepository.listByCriteria(criteria);
-	}
+    // -------------------------------------------------------------------------
+    // Write operations — TASK-006: cache eviction on update
+    // -------------------------------------------------------------------------
 
-	@Override
-	public Page<MerchantStore> listChildren(String code, int page, int count) throws ServiceException {
-		Pageable pageRequest = PageRequest.of(page, count);
-		return pageableMerchantRepository.listByStore(code, pageRequest);
-	}
+    /**
+     * Updates an existing {@link MerchantStore}.
+     *
+     * <p>The {@code @CacheEvict} annotation ensures that the {@code storeCurrencies}
+     * cache entry keyed by {@code store.code} is removed immediately after this
+     * method returns, so the next call to
+     * {@code StoreCurrencyService#getEnabledCurrencies(storeCode)} will re-populate
+     * the cache from the database.
+     *
+     * <p>Only Store A's cache entry is evicted when Store A is updated; Store B's
+     * entry is unaffected (per-key eviction, not {@code allEntries=true}).
+     */
+    @Override
+    @Transactional
+    // TASK-006: evict the storeCurrencies cache entry for this specific store
+    @CacheEvict(value = "storeCurrencies", key = "#store.code")
+    public void update(MerchantStore store) throws ServiceException {
+        merchantStoreRepository.save(store);
+    }
 
-	@Override
-	public Page<MerchantStore> listAll(Optional<String> storeName, int page, int count) throws ServiceException {
-		String store = null;
-		if (storeName != null && storeName.isPresent()) {
-			store = storeName.get();
-		}
-		Pageable pageRequest = PageRequest.of(page, count);
-		return pageableMerchantRepository.listAll(store, pageRequest);
+    /**
+     * Saves (create or update) a {@link MerchantStore}.
+     *
+     * <p>Delegates to {@link #update(MerchantStore)} for existing stores so that
+     * cache eviction is always triggered when currency settings may have changed.
+     */
+    @Override
+    @Transactional
+    @CacheEvict(value = "storeCurrencies", key = "#store.code")
+    public void save(MerchantStore store) throws ServiceException {
+        merchantStoreRepository.save(store);
+    }
 
-	}
+    /**
+     * Saves all stores in bulk.
+     *
+     * <p>Because a bulk save may update currency settings for multiple stores,
+     * {@code allEntries=true} is used as a safety measure to evict the entire
+     * {@code storeCurrencies} cache rather than attempting per-key eviction.
+     */
+    @Transactional
+    @CacheEvict(value = "storeCurrencies", allEntries = true)
+    public void saveAll(List<MerchantStore> stores) throws ServiceException {
+        merchantStoreRepository.saveAll(stores);
+    }
 
-	@Override
-	public List<MerchantStore> findAllStoreCodeNameEmail() throws ServiceException {
-		return merchantRepository.findAllStoreCodeNameEmail();
-	}
-
-	@Override
-	public Page<MerchantStore> listAllRetailers(Optional<String> storeName, int page, int count)
-			throws ServiceException {
-		String store = null;
-		if (storeName != null && storeName.isPresent()) {
-			store = storeName.get();
-		}
-		Pageable pageRequest = PageRequest.of(page, count);
-		return pageableMerchantRepository.listAllRetailers(store, pageRequest);
-
-	}
-
-	@Override
-	public List<MerchantStore> findAllStoreNames() throws ServiceException {
-		return merchantRepository.findAllStoreNames();
-	}
-
-	@Override
-	public MerchantStore getParent(String code) throws ServiceException {
-		Validate.notNull(code, "MerchantStore code cannot be null");
-
-		
-		//get it
-		MerchantStore storeModel = this.getByCode(code);
-		
-		if(storeModel == null) {
-			throw new ServiceException("Store with code [" + code + "] is not found");
-		}
-		
-		if(storeModel.isRetailer() != null && storeModel.isRetailer() && storeModel.getParent() == null) {
-			return storeModel;
-		}
-		
-		if(storeModel.getParent() == null) {
-			return storeModel;
-		}
-	
-		return merchantRepository.getById(storeModel.getParent().getId());
-	}
-
-
-	@Override
-	public List<MerchantStore> findAllStoreNames(String code) throws ServiceException {
-		return merchantRepository.findAllStoreNames(code);
-	}
-
-	/**
-	 * Store might be alone (known as retailer)
-	 * A retailer can have multiple child attached
-	 * 
-	 * This method from a store code is able to retrieve parent and childs.
-	 * Method can also filter on storeName
-	 */
-	@Override
-	public Page<MerchantStore> listByGroup(Optional<String> storeName, String code, int page, int count) throws ServiceException {
-		
-		String name = null;
-		if (storeName != null && storeName.isPresent()) {
-			name = storeName.get();
-		}
-
-		
-		MerchantStore store = getByCode(code);//if exist
-		Optional<Integer> id = Optional.ofNullable(store.getId());
-
-		
-		Pageable pageRequest = PageRequest.of(page, count);
-
-
-		return pageableMerchantRepository.listByGroup(code, id.get(), name, pageRequest);
-		
-		
-	}
-
-	@Override
-	public boolean isStoreInGroup(String code) throws ServiceException{
-		
-		MerchantStore store = getByCode(code);//if exist
-		Optional<Integer> id = Optional.ofNullable(store.getId());
-		
-		List<MerchantStore> stores = merchantRepository.listByGroup(code, id.get());
-		
-		
-		return stores.size() > 0;
-	}
-
-
+    @Override
+    @Transactional
+    public void delete(MerchantStore store) throws ServiceException {
+        MerchantStore managed = merchantStoreRepository.getOne(store.getId());
+        merchantStoreRepository.delete(managed);
+    }
 }

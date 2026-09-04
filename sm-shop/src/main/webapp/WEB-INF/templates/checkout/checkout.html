@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<head>
+    <title th:text="#{label.checkout.title}">Checkout</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+    <!-- Store context: exposes server-side data to JavaScript securely -->
+    <div id="store-context"
+         th:data-store-code="${storeCode}"
+         th:data-fallback-applied="${currencyFallbackApplied}"
+         th:data-fallback-currency="${fallbackCurrencyCode}"
+         th:data-session-currency="${sessionCurrencyCode}"
+         style="display:none;"
+         aria-hidden="true"></div>
+
+    <!-- Currency selector -->
+    <div id="currency-selector-container" class="currency-selector-wrapper">
+        <label for="currency-selector" th:text="#{label.currency}">Currency</label>
+        <select id="currency-selector"
+                name="currency"
+                aria-label="Select currency"
+                class="form-control currency-select">
+            <!-- Options populated dynamically by checkout-currency-selector.js -->
+        </select>
+    </div>
+
+    <!-- Fallback banner: shown when session currency is not supported by this store -->
+    <div id="currency-fallback-banner"
+         class="alert alert-info"
+         style="display:none;"
+         role="alert"
+         aria-live="polite">
+        <span th:text="#{label.currency.fallback.prefix}">Your selected currency is not available for this store. Displaying prices in </span>
+        <strong><span id="fallback-currency-name"></span></strong><span>.</span>
+    </div>
+
+    <!-- Checkout form content -->
+    <div id="checkout-content">
+
+        <h2 th:text="#{label.checkout.heading}">Checkout</h2>
+
+        <!-- Shipping address section -->
+        <section id="shipping-address-section" class="checkout-section">
+            <h3 th:text="#{label.checkout.shipping.address}">Shipping Address</h3>
+            <div th:replace="~{checkout/fragments/shipping-address :: shippingAddressForm}"></div>
+        </section>
+
+        <!-- Payment section -->
+        <section id="payment-section" class="checkout-section">
+            <h3 th:text="#{label.checkout.payment}">Payment</h3>
+            <div th:replace="~{checkout/fragments/payment :: paymentForm}"></div>
+        </section>
+
+        <!-- Order summary section -->
+        <section id="order-summary-section" class="checkout-section">
+            <h3 th:text="#{label.checkout.order.summary}">Order Summary</h3>
+            <div th:replace="~{checkout/fragments/order-summary :: orderSummary}"></div>
+        </section>
+
+        <!-- Place order button -->
+        <div class="checkout-actions">
+            <button type="submit"
+                    id="place-order-btn"
+                    class="btn btn-primary"
+                    th:text="#{label.checkout.place.order}">Place Order</button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Currency selector script: loaded at end of body for performance -->
+<th:block layout:fragment="scripts">
+    <script th:src="@{/static/js/checkout-currency-selector.js}"></script>
+</th:block>
+
+</body>
+</html>
