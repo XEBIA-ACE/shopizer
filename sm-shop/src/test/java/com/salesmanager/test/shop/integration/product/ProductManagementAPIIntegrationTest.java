@@ -37,6 +37,7 @@ import com.salesmanager.shop.model.catalog.product.PersistableProductPrice;
 import com.salesmanager.shop.model.catalog.product.PersistableProductReview;
 import com.salesmanager.shop.model.catalog.product.ProductDescription;
 import com.salesmanager.shop.model.catalog.product.ReadableProduct;
+import com.salesmanager.shop.model.catalog.product.product.definition.ReadableProductDefinition;
 import com.salesmanager.shop.model.catalog.product.attribute.PersistableProductOption;
 import com.salesmanager.shop.model.catalog.product.attribute.PersistableProductOptionValue;
 import com.salesmanager.shop.model.catalog.product.attribute.ProductOptionDescription;
@@ -104,6 +105,45 @@ public class ProductManagementAPIIntegrationTest extends ServicesTestSupport {
 		final ResponseEntity<PersistableProduct> response = testRestTemplate.postForEntity(
 				"/api/v1/private/product?store=" + Constants.DEFAULT_STORE, entity, PersistableProduct.class);
 		assertThat(response.getStatusCode(), is(CREATED));
+	}
+
+	@Test
+	public void adminCreatesProductVisibleInCatalog() throws Exception {
+
+		final PersistableProduct product = super.product("ADMIN-CREATE-1");
+		product.setSku("ADMIN-CREATE-1");
+		product.setVisible(true);
+		ProductSpecification specifications = new ProductSpecification();
+		specifications.setManufacturer(
+				com.salesmanager.core.model.catalog.product.manufacturer.Manufacturer.DEFAULT_MANUFACTURER);
+		product.setProductSpecifications(specifications);
+
+		final HttpEntity<PersistableProduct> entity = new HttpEntity<>(product, getHeader());
+		final ResponseEntity<ReadableProduct> response = testRestTemplate.postForEntity(
+				"/api/v1/private/product?store=" + Constants.DEFAULT_STORE, entity, ReadableProduct.class);
+		assertThat(response.getStatusCode(), is(CREATED));
+
+		final ReadableProduct created = response.getBody();
+		assertNotNull(created);
+		assertNotNull(created.getId());
+		assertThat(created.getSku(), is("ADMIN-CREATE-1"));
+		assertThat(created.getDescription().getName(), is("ADMIN-CREATE-1"));
+
+		final ResponseEntity<ReadableProductDefinition> fetched = testRestTemplate.exchange(
+				"/api/v2/private/product/" + created.getId() + "?store=" + Constants.DEFAULT_STORE, HttpMethod.GET,
+				new HttpEntity<>(getHeader()), ReadableProductDefinition.class);
+		assertThat(fetched.getStatusCode(), is(HttpStatus.OK));
+		assertThat(fetched.getBody().getSku(), is("ADMIN-CREATE-1"));
+	}
+
+	@Test
+	public void createProductWithoutAuthenticationIsRejected() throws Exception {
+
+		final PersistableProduct product = super.product("ANON-CREATE-1");
+		final HttpEntity<PersistableProduct> entity = new HttpEntity<>(product);
+		final ResponseEntity<String> response = testRestTemplate.postForEntity(
+				"/api/v1/private/product?store=" + Constants.DEFAULT_STORE, entity, String.class);
+		assertThat(response.getStatusCode(), is(HttpStatus.UNAUTHORIZED));
 	}
 
 	/**

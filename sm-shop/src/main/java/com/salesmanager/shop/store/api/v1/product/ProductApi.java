@@ -5,6 +5,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -38,17 +40,18 @@ import com.salesmanager.core.model.catalog.product.Product;
 import com.salesmanager.core.model.catalog.product.ProductCriteria;
 import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.core.model.reference.language.Language;
+import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.model.catalog.product.LightPersistableProduct;
 import com.salesmanager.shop.model.catalog.product.ReadableProduct;
 import com.salesmanager.shop.model.catalog.product.ReadableProductList;
 import com.salesmanager.shop.model.catalog.product.product.PersistableProduct;
-import com.salesmanager.shop.model.entity.Entity;
 import com.salesmanager.shop.model.entity.EntityExists;
 import com.salesmanager.shop.store.api.exception.ResourceNotFoundException;
 import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 import com.salesmanager.shop.store.api.exception.UnauthorizedException;
 import com.salesmanager.shop.store.controller.product.facade.ProductCommonFacade;
 import com.salesmanager.shop.store.controller.product.facade.ProductFacade;
+import com.salesmanager.shop.utils.AuthorizationUtils;
 import com.salesmanager.shop.utils.ImageFilePath;
 
 import io.swagger.annotations.Api;
@@ -90,30 +93,41 @@ public class ProductApi {
 	@Qualifier("img")
 	private ImageFilePath imageUtils;
 
+	@Autowired
+	private AuthorizationUtils authorizationUtils;
+
+	private static final List<String> PRODUCT_ADMIN_GROUPS = Stream
+			.of(Constants.GROUP_SUPERADMIN, Constants.GROUP_ADMIN, Constants.GROUP_ADMIN_CATALOGUE,
+					Constants.GROUP_ADMIN_RETAIL)
+			.collect(Collectors.toList());
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductApi.class);
 
 	/**
-	 * Create product
+	 * Create product. Restricted to administrators of the store; returns the
+	 * created product as stored in the catalog.
 	 * @param product
 	 * @param merchantStore
 	 * @param language
-	 * @return Entity
+	 * @return ReadableProduct
 	 */
 	@ResponseStatus(HttpStatus.CREATED)
-	@RequestMapping(value = { "/private/product", "/auth/products" }, // private
-																			// for
-			// adding
-			// products
-			method = RequestMethod.POST)
+	@RequestMapping(value = { "/private/product", "/auth/products" }, method = RequestMethod.POST)
+	@ApiOperation(httpMethod = "POST", value = "Create product", notes = "Requires an administrator of the store", produces = "application/json", response = ReadableProduct.class)
 	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "String", defaultValue = "DEFAULT"),
 			@ApiImplicitParam(name = "lang", dataType = "String", defaultValue = "en") })
-	public @ResponseBody Entity create(@Valid @RequestBody PersistableProduct product,
+	public @ResponseBody ReadableProduct create(@Valid @RequestBody PersistableProduct product,
 			@ApiIgnore MerchantStore merchantStore, @ApiIgnore Language language) {
-	
+
+		String user = authorizationUtils.authenticatedUser();
+		authorizationUtils.authorizeUser(user, PRODUCT_ADMIN_GROUPS, merchantStore);
+
 		Long id = productCommonFacade.saveProduct(merchantStore, product, language);
-		Entity returnEntity = new Entity();
-		returnEntity.setId(id);
-		return returnEntity;
+		try {
+			return productCommonFacade.getProduct(merchantStore, id, language);
+		} catch (Exception e) {
+			throw new ServiceRuntimeException("Error while reading created product [" + id + "]", e);
+		}
 
 	}
 
