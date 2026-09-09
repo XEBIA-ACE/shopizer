@@ -146,3 +146,22 @@ Push your changes to Shopizer
 Please open a PR (pull request) in order to have your changes merged to the upstream
 
 
+
+### Admin Workflow Configuration (US-005)
+-------------------
+REST API for no-code administration of customer onboarding workflows (`sm-shop`).
+
+| Endpoint | Method | Purpose |
+|---|---|---|
+| `/api/v1/private/configurations/workflow` | POST | Create a workflow (`{id?, name, steps:[{id?, description}], version?}`). Returns `201` |
+| `/api/v1/private/configurations/workflow/{id}` | PUT | Update a workflow. Send `version` for optimistic concurrency — a stale version is rejected with a conflict error |
+| `/api/v1/private/configurations/workflow/{id}` | GET | Retrieve a workflow with per-step compliance status |
+| `/api/v1/private/configurations/workflow/{id}/history` | GET | Version history of workflow changes |
+| `/api/v1/private/configurations/workflow/compliance/rules` | GET | List the compliance rules applied to workflows |
+
+Every create/update is automatically checked against the registered compliance
+rules; violations are returned in `complianceIssues` and the workflow is flagged
+(`compliant=false`) — a non-compliant change is never saved without being
+flagged. Saved versions are propagated immediately to all onboarding channels
+(`workflow.propagation.channels`, default `DIGITAL,BRANCH`) and returned in
+`propagatedChannels`.
