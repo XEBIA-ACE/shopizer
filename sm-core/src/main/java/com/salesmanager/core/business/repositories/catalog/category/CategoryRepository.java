@@ -20,7 +20,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long>, Categ
 			+ "where cd.seUrl=?2 and cdl.id=?3 and cm.id = ?1")
 	Category findByFriendlyUrl(Integer storeId, String friendlyUrl, Integer languageId);
 	
-	@Query("select c from Category c left join fetch c.descriptions cd join fetch cd.language cdl join fetch c.merchantStore cm where cd.name like %?2% and cdl.id=?3 and cm.id = ?1 order by c.sortOrder asc")
+	@Query("select c from Category c left join fetch c.descriptions cd join fetch cd.language cdl join fetch c.merchantStore cm where cd.name like concat('%', ?2, '%') and cdl.id=?3 and cm.id = ?1 order by c.sortOrder asc")
 	List<Category> findByName(Integer storeId, String name, Integer languageId);
 	
 	@Query("select c from Category c left join fetch c.descriptions cd join fetch cd.language cdl join fetch c.merchantStore cm where c.code=?2 and cm.id = ?1")
@@ -53,10 +53,10 @@ public interface CategoryRepository extends JpaRepository<Category, Long>, Categ
 	@Query("select c from Category c join fetch c.descriptions cd join fetch cd.language cdl join fetch c.merchantStore cm where c.id=?1")
 	Category findOne(Long categoryId);
 	
-	@Query("select distinct c from Category c left join fetch c.descriptions cd join fetch cd.language cdl join fetch c.merchantStore cm where cm.id=?1 and c.lineage like %?2% order by c.lineage, c.sortOrder asc")
+	@Query("select distinct c from Category c left join fetch c.descriptions cd join fetch cd.language cdl join fetch c.merchantStore cm where cm.id=?1 and c.lineage like concat('%', ?2, '%') order by c.lineage, c.sortOrder asc")
 	List<Category> findByLineage(Integer merchantId, String linenage);
 	
-	@Query("select distinct c from Category c left join fetch c.descriptions cd join fetch cd.language cdl join fetch c.merchantStore cm where cm.code= ?1 and c.lineage like %?2% order by c.lineage, c.sortOrder asc")
+	@Query("select distinct c from Category c left join fetch c.descriptions cd join fetch cd.language cdl join fetch c.merchantStore cm where cm.code= ?1 and c.lineage like concat('%', ?2, '%') order by c.lineage, c.sortOrder asc")
 	List<Category> findByLineage(String storeCode, String linenage);
 	
 	@Query("select distinct c from Category c left join fetch c.descriptions cd join fetch cd.language cdl join fetch c.merchantStore cm where cm.id=?1 and c.depth >= ?2 order by c.lineage, c.sortOrder asc")
@@ -65,7 +65,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long>, Categ
 	@Query("select distinct c from Category c left join fetch c.descriptions cd join fetch cd.language cdl join fetch c.merchantStore cm where cm.id=?1 and cdl.id=?3 and c.depth >= ?2 order by c.lineage, c.sortOrder asc")
 	List<Category> findByDepth(Integer merchantId, int depth, Integer languageId);
 	
-	@Query("select distinct c from Category c left join fetch c.descriptions cd join fetch cd.language cdl join fetch c.merchantStore cm where cm.id=?1 and cdl.id=?3 and c.depth >= ?2 and (?4 is null or cd.name like %?4%) order by c.lineage, c.sortOrder asc")
+	@Query("select distinct c from Category c left join fetch c.descriptions cd join fetch cd.language cdl join fetch c.merchantStore cm where cm.id=?1 and cdl.id=?3 and c.depth >= ?2 and (?4 is null or cd.name like concat('%', ?4, '%')) order by c.lineage, c.sortOrder asc")
 	List<Category> find(Integer merchantId, int depth, Integer languageId, String name);
 	
 	@Query("select distinct c from Category c left join fetch c.descriptions cd join fetch cd.language cdl join fetch c.merchantStore cm where cm.id=?1 and cdl.id=?3 and c.depth >= ?2 and c.featured=true order by c.lineage, c.sortOrder asc")

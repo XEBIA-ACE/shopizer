@@ -107,7 +107,7 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
 			+ "left join fetch pvv.productOption pvvpo "
 			+ "left join fetch pvv.productOptionValue pvvpov " 
 			+ "left join fetch pvvpo.descriptions povvpod "
-			+ "left join fetch pvpov.descriptions pvpovd "
+			+ "left join fetch pvvpov.descriptions povvpovd "
 			+ "left join fetch p.productVariantGroup pig "
 			+ "left join fetch pig.images pigi "
 			+ "left join fetch pigi.descriptions pigid "
