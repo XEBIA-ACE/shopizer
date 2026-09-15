@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.event.EventListener;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.Ordered;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -33,6 +34,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import com.salesmanager.core.business.configuration.CoreApplicationConfiguration;
 import com.salesmanager.shop.filter.CorsFilter;
+import com.salesmanager.shop.filter.TrailingSlashFilter;
 import com.salesmanager.shop.filter.XssFilter;
 import com.salesmanager.shop.utils.LabelUtils;
 
@@ -49,6 +51,15 @@ public class ShopApplicationConfiguration implements WebMvcConfigurer {
   public void applicationReadyCode() {
     String workingDir = System.getProperty("user.dir");
     logger.info("Current working directory : " + workingDir);
+  }
+
+  @Bean
+  public FilterRegistrationBean<TrailingSlashFilter> trailingSlashFilter() {
+    FilterRegistrationBean<TrailingSlashFilter> registrationBean = new FilterRegistrationBean<>();
+    registrationBean.setFilter(new TrailingSlashFilter());
+    registrationBean.addUrlPatterns("/*");
+    registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+    return registrationBean;
   }
 
   @Bean
@@ -89,7 +100,7 @@ public class ShopApplicationConfiguration implements WebMvcConfigurer {
      **/
 
     registry
-        .addInterceptor(corsFilter())
+        .addInterceptor(corsInterceptor())
         // public services cors filter
         .addPathPatterns("/services/**")
         // REST api
@@ -117,7 +128,7 @@ public class ShopApplicationConfiguration implements WebMvcConfigurer {
 	 */
 
   @Bean
-  public CorsFilter corsFilter() {
+  public CorsFilter corsInterceptor() {
     return new CorsFilter();
   }
 

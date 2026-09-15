@@ -18,8 +18,8 @@ public interface PageableCatalogEntryRepository extends PagingAndSortingReposito
 	  		+ "left join fetch cc.descriptions ccd "
 	  		+ "where cl.id=?1 and "
 	  		+ "clm.id=?2 and "
-	  		+ "cpd.language.id=?3 and (?4 is null or cpd.name like %?4%)",
-		      countQuery = "select  count(c) from CatalogEntry c join c.product cp join c.category cc join c.catalog cl join cl.merchantStore clm join cp.descriptions cpd where cl.id=?1 and clm.id=?2 and cpd.language.id=?3 and (?4 is null or cpd.name like %?4%)")*/
+	  		+ "cpd.language.id=?3 and (?4 is null or cpd.name like concat('%', ?4, '%'))",
+		      countQuery = "select  count(c) from CatalogEntry c join c.product cp join c.category cc join c.catalog cl join cl.merchantStore clm join cp.descriptions cpd where cl.id=?1 and clm.id=?2 and cpd.language.id=?3 and (?4 is null or cpd.name like concat('%', ?4, '%'))")*/
 	  @Query(value = "select distinct c from CatalogCategoryEntry c  "
 		  		+ "join fetch c.category cc "
 		  		+ "join fetch c.catalog cl "
