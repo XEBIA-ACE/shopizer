@@ -3,6 +3,7 @@ package com.salesmanager.shop.store.api.v1.category;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -25,16 +26,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.salesmanager.core.business.services.catalog.category.CategoryService;
+import com.salesmanager.core.model.catalog.category.Category;
+import com.salesmanager.core.model.catalog.product.ProductCriteria;
 import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.core.model.reference.language.Language;
 import com.salesmanager.shop.constants.Constants;
 import com.salesmanager.shop.model.catalog.category.PersistableCategory;
 import com.salesmanager.shop.model.catalog.category.ReadableCategory;
 import com.salesmanager.shop.model.catalog.category.ReadableCategoryList;
+import com.salesmanager.shop.model.catalog.product.ReadableProductList;
 import com.salesmanager.shop.model.entity.EntityExists;
 import com.salesmanager.shop.model.entity.ListCriteria;
+import com.salesmanager.shop.store.api.exception.ResourceNotFoundException;
 import com.salesmanager.shop.store.api.exception.UnauthorizedException;
 import com.salesmanager.shop.store.controller.category.facade.CategoryFacade;
+import com.salesmanager.shop.store.controller.product.facade.ProductFacade;
 import com.salesmanager.shop.store.controller.user.facade.UserFacade;
 
 import io.swagger.annotations.Api;
@@ -61,6 +68,12 @@ public class CategoryApi {
 
 	@Inject
 	private UserFacade userFacade;
+
+	@Inject
+	private CategoryService categoryService;
+
+	@Inject
+	private ProductFacade productFacade;
 
 	@GetMapping(value = "/category/{id}", produces = { APPLICATION_JSON_VALUE })
 	@ApiOperation(httpMethod = "GET", value = "Get category list for an given Category id", notes = "List current Category and child category")
@@ -89,6 +102,56 @@ public class CategoryApi {
 								@ApiIgnore MerchantStore merchantStore,
 								@ApiIgnore Language language) throws Exception {
 		ReadableCategory category = categoryFacade.getCategoryByFriendlyUrl(merchantStore, friendlyUrl, language);
+		return category;
+	}
+
+	/**
+	 * Browse products attached to a category, identified either by id or by
+	 * friendly url (slug). Only products visible in the shop are returned.
+	 */
+	@GetMapping(value = "/category/{idOrFriendlyUrl}/products", produces = { APPLICATION_JSON_VALUE })
+	@ApiOperation(httpMethod = "GET", value = "Browse products of a given category", notes = "Category can be identified by id or by friendly url. Supports pagination with ?page=0&count=10")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "List of products found", response = ReadableProductList.class),
+			@ApiResponse(code = 404, message = "Category not found") })
+	@ApiImplicitParams({ @ApiImplicitParam(name = "store", dataType = "string", defaultValue = "DEFAULT"),
+			@ApiImplicitParam(name = "lang", dataType = "string", defaultValue = "en") })
+	public ReadableProductList listProducts(
+			@PathVariable(name = "idOrFriendlyUrl") String idOrFriendlyUrl,
+			@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+			@RequestParam(value = "count", required = false, defaultValue = "10") Integer count,
+			@RequestParam(value = "available", required = false) Boolean available,
+			@ApiIgnore MerchantStore merchantStore,
+			@ApiIgnore Language language) throws Exception {
+
+		Category category = resolveCategory(merchantStore, idOrFriendlyUrl, language);
+
+		ProductCriteria criteria = new ProductCriteria();
+		criteria.setOrigin(ProductCriteria.ORIGIN_SHOP);
+		criteria.setLanguage(language.getCode());
+		criteria.setStartPage(page);
+		criteria.setMaxCount(count);
+		if (available != null && available) {
+			criteria.setAvailable(available);
+		}
+		List<Long> categoryIds = new ArrayList<>();
+		categoryIds.add(category.getId());
+		criteria.setCategoryIds(categoryIds);
+
+		return productFacade.getProductListsByCriterias(merchantStore, language, criteria);
+	}
+
+	private Category resolveCategory(MerchantStore store, String idOrFriendlyUrl, Language language) {
+		Category category = null;
+		if (idOrFriendlyUrl.chars().allMatch(Character::isDigit)) {
+			category = categoryService.getById(Long.valueOf(idOrFriendlyUrl), store.getId());
+		}
+		if (category == null) {
+			category = categoryService.getBySeUrl(store, idOrFriendlyUrl, language);
+		}
+		if (category == null || category.getMerchantStore().getId().intValue() != store.getId().intValue()) {
+			throw new ResourceNotFoundException("Category [" + idOrFriendlyUrl + "] not found for store [" + store.getCode() + "]");
+		}
 		return category;
 	}
 
