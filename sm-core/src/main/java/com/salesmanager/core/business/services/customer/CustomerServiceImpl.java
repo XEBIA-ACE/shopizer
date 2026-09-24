@@ -12,6 +12,7 @@ import com.salesmanager.core.business.exception.ServiceException;
 import com.salesmanager.core.business.repositories.customer.CustomerRepository;
 import com.salesmanager.core.business.services.common.generic.SalesManagerEntityServiceImpl;
 import com.salesmanager.core.business.services.customer.attribute.CustomerAttributeService;
+import com.salesmanager.core.business.services.system.compliance.ComplianceAuditReportService;
 import com.salesmanager.core.model.common.Address;
 import com.salesmanager.core.model.customer.Customer;
 import com.salesmanager.core.model.customer.CustomerCriteria;
@@ -34,6 +35,9 @@ public class CustomerServiceImpl extends SalesManagerEntityServiceImpl<Long, Cus
 	
 	@Inject
 	private GeoLocation geoLocation;
+
+	@Inject
+	private ComplianceAuditReportService complianceAuditReportService;
 
 	
 	@Inject
@@ -99,15 +103,27 @@ public class CustomerServiceImpl extends SalesManagerEntityServiceImpl<Long, Cus
 
 	public void delete(Customer customer) throws ServiceException {
 		customer = getById(customer.getId());
+		Long customerId = customer.getId();
+		MerchantStore store = customer.getMerchantStore();
+		String reference = customer.getNick() != null ? customer.getNick() : customer.getEmailAddress();
 		
 		//delete attributes
-		List<CustomerAttribute> attributes =customerAttributeService.getByCustomer(customer.getMerchantStore(), customer);
+		int relatedRecordsDeleted = 0;
+		List<CustomerAttribute> attributes =customerAttributeService.getByCustomer(store, customer);
 		if(attributes!=null) {
 			for(CustomerAttribute attribute : attributes) {
 				customerAttributeService.delete(attribute);
+				relatedRecordsDeleted++;
 			}
 		}
 		customerRepository.delete(customer);
+
+		boolean stillExists = getById(customerId) != null;
+		complianceAuditReportService.reportDataDeletion(store, Customer.class.getSimpleName(), customerId, reference,
+				stillExists, relatedRecordsDeleted);
+		if (stillExists) {
+			throw new ServiceException("Customer [" + customerId + "] could not be verified as deleted");
+		}
 
 	}
 
