@@ -3,13 +3,16 @@ package com.salesmanager.test.shop.integration.product;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Ignore;
@@ -37,6 +40,7 @@ import com.salesmanager.shop.model.catalog.product.PersistableProductPrice;
 import com.salesmanager.shop.model.catalog.product.PersistableProductReview;
 import com.salesmanager.shop.model.catalog.product.ProductDescription;
 import com.salesmanager.shop.model.catalog.product.ReadableProduct;
+import com.salesmanager.shop.model.catalog.product.ReadableProductList;
 import com.salesmanager.shop.model.catalog.product.attribute.PersistableProductOption;
 import com.salesmanager.shop.model.catalog.product.attribute.PersistableProductOptionValue;
 import com.salesmanager.shop.model.catalog.product.attribute.ProductOptionDescription;
@@ -104,6 +108,67 @@ public class ProductManagementAPIIntegrationTest extends ServicesTestSupport {
 		final ResponseEntity<PersistableProduct> response = testRestTemplate.postForEntity(
 				"/api/v1/private/product?store=" + Constants.DEFAULT_STORE, entity, PersistableProduct.class);
 		assertThat(response.getStatusCode(), is(CREATED));
+	}
+
+	/**
+	 * Browse products by category, both by category id and by friendly url
+	 */
+	@Test
+	public void browseProductsByCategory() throws Exception {
+
+		final PersistableCategory newCategory = new PersistableCategory();
+		newCategory.setCode("browse-cat");
+		newCategory.setSortOrder(1);
+		newCategory.setVisible(true);
+		newCategory.setDepth(4);
+		newCategory.setParent(new Category());
+
+		final CategoryDescription description = new CategoryDescription();
+		description.setLanguage("en");
+		description.setName("browse-cat");
+		description.setFriendlyUrl("browse-cat");
+		description.setTitle("browse-cat");
+		newCategory.setDescriptions(Collections.singletonList(description));
+
+		final ResponseEntity<PersistableCategory> categoryResponse = testRestTemplate.postForEntity(
+				"/api/v1/private/category?store=" + Constants.DEFAULT_STORE,
+				new HttpEntity<>(newCategory, getHeader()), PersistableCategory.class);
+		assertThat(categoryResponse.getStatusCode(), is(CREATED));
+		final PersistableCategory cat = categoryResponse.getBody();
+
+		final PersistableProduct product = super.product("BROWSE-PRODUCT");
+		product.setCategories(Collections.singletonList(cat));
+		ProductSpecification specifications = new ProductSpecification();
+		specifications.setManufacturer(
+				com.salesmanager.core.model.catalog.product.manufacturer.Manufacturer.DEFAULT_MANUFACTURER);
+		product.setProductSpecifications(specifications);
+		product.setPrice(BigDecimal.TEN);
+		product.setSku("BROWSE-PRODUCT");
+		product.setVisible(true);
+		final ResponseEntity<PersistableProduct> productResponse = testRestTemplate.postForEntity(
+				"/api/v1/private/product?store=" + Constants.DEFAULT_STORE, new HttpEntity<>(product, getHeader()),
+				PersistableProduct.class);
+		assertThat(productResponse.getStatusCode(), is(CREATED));
+
+		final HttpEntity<String> getEntity = new HttpEntity<>(getHeader());
+
+		final ResponseEntity<ReadableProductList> byId = testRestTemplate.exchange(
+				"/api/v1/category/" + cat.getId() + "/products?store=" + Constants.DEFAULT_STORE, HttpMethod.GET,
+				getEntity, ReadableProductList.class);
+		assertThat(byId.getStatusCode(), is(OK));
+		assertNotNull(byId.getBody());
+		assertTrue(byId.getBody().getProducts().stream().anyMatch(p -> "BROWSE-PRODUCT".equals(p.getSku())));
+
+		final ResponseEntity<ReadableProductList> bySlug = testRestTemplate.exchange(
+				"/api/v1/category/browse-cat/products?store=" + Constants.DEFAULT_STORE, HttpMethod.GET, getEntity,
+				ReadableProductList.class);
+		assertThat(bySlug.getStatusCode(), is(OK));
+		assertThat(bySlug.getBody().getRecordsTotal(), is(byId.getBody().getRecordsTotal()));
+
+		final ResponseEntity<String> missing = testRestTemplate.exchange(
+				"/api/v1/category/does-not-exist/products?store=" + Constants.DEFAULT_STORE, HttpMethod.GET, getEntity,
+				String.class);
+		assertThat(missing.getStatusCode(), is(HttpStatus.NOT_FOUND));
 	}
 
 	/**
