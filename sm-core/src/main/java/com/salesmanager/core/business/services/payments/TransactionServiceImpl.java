@@ -206,8 +206,4 @@ public class TransactionServiceImpl  extends SalesManagerEntityServiceImpl<Long,
 	}
 
 
-	public Transaction findCapturableTransaction(List<Transaction> transactions) {
-    return domainService.findCapturableTransaction(transactions).orElse(null);
-}
-
 }

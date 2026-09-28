@@ -82,6 +82,8 @@ public interface CustomerFacade
     public boolean checkIfUserExists(final String userName,final MerchantStore store) throws Exception;
     
     public PersistableCustomer  registerCustomer( final PersistableCustomer customer,final MerchantStore merchantStore, final Language language) throws Exception;
+
+    PersistableCustomer registerPendingCustomer(PersistableCustomer customer, MerchantStore merchantStore, Language language) throws Exception;
     
     public Address getAddress(final Long userId, final MerchantStore merchantStore,boolean isBillingAddress) throws Exception;
     

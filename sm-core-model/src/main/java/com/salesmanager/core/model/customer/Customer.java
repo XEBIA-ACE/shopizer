@@ -96,6 +96,17 @@ public class Customer extends SalesManagerEntity<Long, Customer> implements Audi
 
 	@Column(name="CUSTOMER_ANONYMOUS")
 	private boolean anonymous;
+
+	@Column(name="EMAIL_VERIFIED")
+	private Boolean emailVerified = true;
+
+	public Boolean getEmailVerified() {
+		return emailVerified;
+	}
+
+	public void setEmailVerified(Boolean emailVerified) {
+		this.emailVerified = emailVerified;
+	}
 	
 	@Column(name = "REVIEW_AVG")
 	private BigDecimal customerReviewAvg;

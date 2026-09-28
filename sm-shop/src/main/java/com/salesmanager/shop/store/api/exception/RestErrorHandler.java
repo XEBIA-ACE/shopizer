@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice({"com.salesmanager.shop.store.api"})
 public class RestErrorHandler {
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ErrorEntity> handleResponseStatusException(ResponseStatusException exception) {
+        return ResponseEntity.status(exception.getStatus()).body(
+                createErrorEntity(String.valueOf(exception.getStatus().value()), exception.getReason(), null));
+    }
   
     private static final Logger log = LoggerFactory.getLogger(RestErrorHandler.class);
 
