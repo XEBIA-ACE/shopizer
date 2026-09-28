@@ -1,11 +1,9 @@
 package com.salesmanager.shop.store.facade.customer;
 
 import java.security.Principal;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -20,6 +18,7 @@ import com.salesmanager.core.business.exception.ServiceException;
 import com.salesmanager.core.business.modules.email.Email;
 import com.salesmanager.core.business.services.customer.CustomerService;
 import com.salesmanager.core.business.services.reference.language.LanguageService;
+import com.salesmanager.core.business.services.security.PasswordResetTokenService;
 import com.salesmanager.core.business.services.system.EmailService;
 import com.salesmanager.core.model.common.CredentialsReset;
 import com.salesmanager.core.model.customer.Customer;
@@ -31,7 +30,6 @@ import com.salesmanager.shop.store.api.exception.ResourceNotFoundException;
 import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 import com.salesmanager.shop.store.api.exception.UnauthorizedException;
 import com.salesmanager.shop.store.controller.customer.facade.v1.CustomerFacade;
-import com.salesmanager.shop.utils.DateUtil;
 import com.salesmanager.shop.utils.EmailUtils;
 import com.salesmanager.shop.utils.FilePathUtils;
 import com.salesmanager.shop.utils.ImageFilePath;
@@ -68,6 +66,9 @@ public class CustomerFacadeImpl implements CustomerFacade {
 	@Inject
 	private PasswordEncoder passwordEncoder;
 
+	@Inject
+	private PasswordResetTokenService passwordResetTokenService;
+
 	private static final String resetCustomerLink = "customer/%s/reset/%s"; // front
 																			// url
 
@@ -103,17 +104,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 						"Customer [" + customerName + "] not found for store [" + store.getCode() + "]");
 			}
 
-			// generates unique token
-			String token = UUID.randomUUID().toString();
-
-			Date expiry = DateUtil.addDaysToCurrentDate(2);
-
-			CredentialsReset credsRequest = new CredentialsReset();
-			credsRequest.setCredentialsRequest(token);
-			credsRequest.setCredentialsRequestExpiry(expiry);
-			customer.setCredentialsResetRequest(credsRequest);
-
-			customerService.saveOrUpdate(customer);
+			String token = passwordResetTokenService.generateToken();
 
 			// reset password link
 			// this will build http | https ://domain/contextPath
@@ -123,6 +114,15 @@ public class CustomerFacadeImpl implements CustomerFacade {
 			// request
 			String customerResetLink = new StringBuilder().append(baseUrl)
 					.append(String.format(resetCustomerLink, store.getCode(), token)).toString();
+
+			if (!passwordResetTokenService.isSecureLink(customerResetLink)) {
+				throw new GenericRuntimeException("Password reset link must use HTTPS [" + baseUrl + "]");
+			}
+
+			CredentialsReset credsRequest = passwordResetTokenService.createCredentialsReset(token);
+			customer.setCredentialsResetRequest(credsRequest);
+
+			customerService.saveOrUpdate(customer);
 
 			resetPasswordRequest(customer, customerResetLink, store, lamguageService.toLocale(language, store));
 
@@ -213,6 +213,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
 		Customer customer = verifyCustomerLink(token, store);// reverify
 		customer.setPassword(passwordEncoder.encode(password));
+		customer.setCredentialsResetRequest(null);
 		try {
 			customerService.save(customer);
 		} catch (ServiceException e) {
@@ -225,24 +226,17 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
 		Customer customer = null;
 		try {
-			customer = customerService.getByPasswordResetToken(store, token);
+			customer = customerService.getByPasswordResetToken(store, passwordResetTokenService.hashToken(token));
 			if (customer == null) {
-				throw new ResourceNotFoundException(
-						"Customer not fount for store [" + store + "] and token [" + token + "]");
+				throw new ResourceNotFoundException("Customer not found for store [" + store + "] and reset token");
 			}
 
 		} catch (Exception e) {
 			throw new ServiceRuntimeException("Cannot verify customer token", e);
 		}
 
-		Date tokenExpiry = customer.getCredentialsResetRequest().getCredentialsRequestExpiry();
-
-		if (tokenExpiry == null) {
-			throw new GenericRuntimeException("No expiry date configured for token [" + token + "]");
-		}
-
-		if (!DateUtil.dateBeforeEqualsDate(new Date(), tokenExpiry)) {
-			throw new GenericRuntimeException("Ttoken [" + token + "] has expired");
+		if (!passwordResetTokenService.isValid(customer.getCredentialsResetRequest())) {
+			throw new GenericRuntimeException("Password reset token has expired");
 		}
 
 		return customer;

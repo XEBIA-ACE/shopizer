@@ -1,13 +1,11 @@
 package com.salesmanager.shop.store.facade.user;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -32,6 +30,7 @@ import com.salesmanager.core.business.exception.ServiceException;
 import com.salesmanager.core.business.modules.email.Email;
 import com.salesmanager.core.business.services.merchant.MerchantStoreService;
 import com.salesmanager.core.business.services.reference.language.LanguageService;
+import com.salesmanager.core.business.services.security.PasswordResetTokenService;
 import com.salesmanager.core.business.services.system.EmailService;
 import com.salesmanager.core.business.services.user.PermissionService;
 import com.salesmanager.core.business.services.user.UserService;
@@ -63,7 +62,6 @@ import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 import com.salesmanager.shop.store.api.exception.UnauthorizedException;
 import com.salesmanager.shop.store.controller.security.facade.SecurityFacade;
 import com.salesmanager.shop.store.controller.user.facade.UserFacade;
-import com.salesmanager.shop.utils.DateUtil;
 import com.salesmanager.shop.utils.EmailUtils;
 import com.salesmanager.shop.utils.FilePathUtils;
 import com.salesmanager.shop.utils.ImageFilePath;
@@ -121,6 +119,9 @@ public class UserFacadeImpl implements UserFacade {
 
 	@Inject
 	private PasswordEncoder passwordEncoder;
+
+	@Inject
+	private PasswordResetTokenService passwordResetTokenService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserFacadeImpl.class);
 
@@ -805,17 +806,7 @@ public class UserFacadeImpl implements UserFacade {
 						"User [" + userName + "] not found for store [" + store.getCode() + "]");
 			}
 
-			// generates unique token
-			String token = UUID.randomUUID().toString();
-
-			Date expiry = DateUtil.addDaysToCurrentDate(2);
-
-			CredentialsReset credsRequest = new CredentialsReset();
-			credsRequest.setCredentialsRequest(token);
-			credsRequest.setCredentialsRequestExpiry(expiry);
-			user.setCredentialsResetRequest(credsRequest);
-
-			userService.saveOrUpdate(user);
+			String token = passwordResetTokenService.generateToken();
 
 			// reset password link
 			// this will build http | https ://domain/contextPath
@@ -829,6 +820,15 @@ public class UserFacadeImpl implements UserFacade {
 			String customerResetLink = new StringBuilder().append(baseUrl)
 					.append(Constants.SLASH)
 					.append(String.format(resetUserLink, store.getCode(), token)).toString();
+
+			if (!passwordResetTokenService.isSecureLink(customerResetLink)) {
+				throw new GenericRuntimeException("Password reset link must use HTTPS [" + baseUrl + "]");
+			}
+
+			CredentialsReset credsRequest = passwordResetTokenService.createCredentialsReset(token);
+			user.setCredentialsResetRequest(credsRequest);
+
+			userService.saveOrUpdate(user);
 
 			resetPasswordRequest(user, customerResetLink, store, lamguageService.toLocale(language, store));
 
@@ -855,6 +855,7 @@ public class UserFacadeImpl implements UserFacade {
 
 		User user = verifyUserLink(token, store);// reverify
 		user.setAdminPassword(passwordEncoder.encode(password));
+		user.setCredentialsResetRequest(null);
 		
 		try {
 			userService.save(user);
@@ -868,24 +869,17 @@ public class UserFacadeImpl implements UserFacade {
 
 		User user = null;
 		try {
-			user = userService.getByPasswordResetToken(store, token);
+			user = userService.getByPasswordResetToken(store, passwordResetTokenService.hashToken(token));
 			if (user == null) {
-				throw new ResourceNotFoundException(
-						"Customer not fount for store [" + store + "] and token [" + token + "]");
+				throw new ResourceNotFoundException("User not found for store [" + store + "] and reset token");
 			}
 
 		} catch (Exception e) {
 			throw new ServiceRuntimeException("Cannot verify customer token", e);
 		}
 
-		Date tokenExpiry = user.getCredentialsResetRequest().getCredentialsRequestExpiry();
-
-		if (tokenExpiry == null) {
-			throw new GenericRuntimeException("No expiry date configured for token [" + token + "]");
-		}
-
-		if (!DateUtil.dateBeforeEqualsDate(new Date(), tokenExpiry)) {
-			throw new GenericRuntimeException("Ttoken [" + token + "] has expired");
+		if (!passwordResetTokenService.isValid(user.getCredentialsResetRequest())) {
+			throw new GenericRuntimeException("Password reset token has expired");
 		}
 
 		return user;

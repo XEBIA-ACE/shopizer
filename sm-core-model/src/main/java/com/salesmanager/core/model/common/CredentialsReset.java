@@ -13,8 +13,8 @@ public class CredentialsReset {
 	@Column (name ="RESET_CREDENTIALS_REQ", length=256)
 	private String credentialsRequest;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "RESET_CREDENTIALS_EXP")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "RESET_CREDENTIALS_EXP_TS")
 	private Date credentialsRequestExpiry = new Date();
 
 	public String getCredentialsRequest() {
