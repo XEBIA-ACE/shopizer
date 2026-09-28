@@ -43,12 +43,12 @@ public class JWTCustomerServicesImpl extends AbstractCustomerServices {
 		return new JWTUser(
         		customer.getId(),
         		userName,
-        		customer.getBilling().getFirstName(),
-        		customer.getBilling().getLastName(),
+                customer.getBilling() == null ? null : customer.getBilling().getFirstName(),
+                customer.getBilling() == null ? null : customer.getBilling().getLastName(),
                 customer.getEmailAddress(),
                 customer.getPassword(),
                 authorities,
-                true,
+                !Boolean.FALSE.equals(customer.getEmailVerified()),
                 lastModified
         );
 	}

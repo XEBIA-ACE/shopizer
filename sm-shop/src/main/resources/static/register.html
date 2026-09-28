@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Register</title></head>
+<body>
+  <h1>Create an account</h1>
+  <form id="register">
+    <label>Email <input id="email" type="email" autocomplete="email" required maxlength="96"></label>
+    <p id="email-error" role="alert"></p>
+    <label>Password <input id="password" type="password" autocomplete="new-password" required minlength="8"></label>
+    <p id="password-error" role="alert"></p>
+    <button type="submit">Register</button>
+  </form>
+  <p id="result" role="status"></p>
+  <form id="resend" hidden>
+    <button type="submit">Resend confirmation link</button>
+  </form>
+  <script src="/registration.js" defer></script>
+</body>
+</html>

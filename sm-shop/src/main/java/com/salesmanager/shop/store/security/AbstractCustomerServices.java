@@ -62,6 +62,9 @@ public abstract class AbstractCustomerServices implements UserDetailsService{
 					//return null;
 					throw new UsernameNotFoundException("User " + userName + " not found");
 				}
+				if (Boolean.FALSE.equals(user.getEmailVerified())) {
+					throw new UsernameNotFoundException("Customer email is not verified");
+				}
 	
 	
 

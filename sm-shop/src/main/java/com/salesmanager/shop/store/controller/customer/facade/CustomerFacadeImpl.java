@@ -345,9 +345,21 @@ public class CustomerFacadeImpl implements CustomerFacade {
   @Override
   public PersistableCustomer registerCustomer(final PersistableCustomer customer,
       final MerchantStore merchantStore, Language language) throws Exception {
+    return registerCustomer(customer, merchantStore, language, false);
+  }
+
+  @Override
+  public PersistableCustomer registerPendingCustomer(final PersistableCustomer customer,
+      final MerchantStore merchantStore, Language language) throws Exception {
+    return registerCustomer(customer, merchantStore, language, true);
+  }
+
+  private PersistableCustomer registerCustomer(final PersistableCustomer customer,
+      final MerchantStore merchantStore, Language language, boolean pending) throws Exception {
     LOG.info("Starting customer registration process..");
 
-    if (userExist(customer.getUserName())) {
+    if (pending ? customerService.getByNickForRegistration(customer.getUserName(), merchantStore.getId()) != null
+        : userExist(customer.getUserName())) {
       throw new UserAlreadyExistException("User already exist");
     }
 
@@ -356,6 +368,10 @@ public class CustomerFacadeImpl implements CustomerFacade {
       LOG.equals("Unable to create customer in system");
       // throw new CustomerRegistrationException( "Unable to register customer" );
       throw new Exception("Unable to register customer");
+    }
+
+    if (pending) {
+      customerModel.setEmailVerified(false);
     }
 
     LOG.info("About to persist customer to database.");

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Dashboard</title></head>
+<body>
+  <h1>Your dashboard</h1><p id="account" role="status">Checking session...</p>
+  <script>
+    fetch('/api/v1/auth/session')
+      .then(async response => {
+        if (!response.ok) { window.location.replace('/register.html'); return; }
+        const account = await response.json();
+        document.getElementById('account').textContent = `Signed in as ${account.email}`;
+      })
+      .catch(() => { window.location.replace('/register.html'); });
+  </script>
+</body>
+</html>

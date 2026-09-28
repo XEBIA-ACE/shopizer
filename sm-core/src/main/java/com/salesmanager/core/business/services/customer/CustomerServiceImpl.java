@@ -56,6 +56,11 @@ public class CustomerServiceImpl extends SalesManagerEntityServiceImpl<Long, Cus
 	public Customer getByNick(String nick) {
 		return customerRepository.findByNick(nick);	
 	}
+
+	@Override
+	public Customer getByNickForRegistration(String nick, int storeId) {
+		return customerRepository.findByNickForRegistration(nick, storeId);
+	}
 	
 	@Override
 	public Customer getByNick(String nick, int storeId) {

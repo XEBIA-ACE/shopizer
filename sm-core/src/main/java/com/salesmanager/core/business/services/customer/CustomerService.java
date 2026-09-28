@@ -21,6 +21,8 @@ public interface CustomerService  extends SalesManagerEntityService<Long, Custom
 
 	Customer getByNick(String nick);
 
+	Customer getByNickForRegistration(String nick, int storeId);
+
 	void saveOrUpdate(Customer customer) throws ServiceException ;
 
 	CustomerList getListByStore(MerchantStore store, CustomerCriteria criteria);
