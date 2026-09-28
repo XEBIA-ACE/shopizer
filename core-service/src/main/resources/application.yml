@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: core-service
+  profiles:
+    default: dev
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    serialization:
+      write-dates-as-timestamps: false
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: ${CORE_SERVICE_PORT:8081}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+logging:
+  structured:
+    format:
+      console: logstash
+
+app:
+  verification:
+    token-ttl: ${VERIFICATION_TOKEN_TTL:PT24H}
+    link-base-url: ${VERIFICATION_LINK_BASE_URL:http://localhost:3000/verify-email}
+  resend:
+    cooldown: ${RESEND_COOLDOWN:PT60S}
+    max-attempts: ${RESEND_MAX_ATTEMPTS:5}
+  session:
+    ttl: ${SESSION_TTL:PT1H}
+    redirect-location: ${POST_VERIFICATION_REDIRECT:/dashboard}
+  jwt:
+    issuer: ${JWT_ISSUER:ecommerce-core-service}
+    private-key-path: ${JWT_PRIVATE_KEY_PATH:}
+    public-key-path: ${JWT_PUBLIC_KEY_PATH:}
+  notification:
+    base-url: ${NOTIFICATION_SERVICE_URL:}
+    from-address: ${NOTIFICATION_FROM_ADDRESS:no-reply@example.com}
+    timeout: ${NOTIFICATION_TIMEOUT:PT5S}
+  security:
+    bcrypt-strength: ${BCRYPT_STRENGTH:12}

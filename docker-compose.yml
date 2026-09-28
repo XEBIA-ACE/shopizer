@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-ecommerce}
+      POSTGRES_USER: ${POSTGRES_USER:-ecommerce}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ecommerce}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  core-service:
+    build: ./core-service
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      CORE_SERVICE_PORT: 8081
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-ecommerce}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-ecommerce}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-ecommerce}
+      VERIFICATION_LINK_BASE_URL: ${VERIFICATION_LINK_BASE_URL:-http://localhost:3000/verify-email}
+      NOTIFICATION_SERVICE_URL: ${NOTIFICATION_SERVICE_URL:-}
+      NOTIFICATION_FROM_ADDRESS: ${NOTIFICATION_FROM_ADDRESS:-no-reply@example.com}
+      JWT_PRIVATE_KEY_PATH: ${JWT_PRIVATE_KEY_PATH:-}
+      JWT_PUBLIC_KEY_PATH: ${JWT_PUBLIC_KEY_PATH:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8081/actuator/health/readiness || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+
+  gateway:
+    build: ./gateway
+    environment:
+      PORT: 8080
+      CORE_SERVICE_URL: http://core-service:8081
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    ports:
+      - "${GATEWAY_PORT:-8080}:8080"
+    depends_on:
+      core-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+
+volumes:
+  postgres-data:
