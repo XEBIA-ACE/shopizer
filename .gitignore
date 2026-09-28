@@ -31,3 +31,9 @@ sm-shop/src/main/resources/database.properties
 .DS_Store
 
 .mvnw/*.jar
+
+# US-001 core-service / gateway
+node_modules/
+coverage/
+.env
+*.pem
