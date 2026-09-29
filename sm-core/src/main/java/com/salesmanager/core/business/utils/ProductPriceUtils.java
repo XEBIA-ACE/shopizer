@@ -306,6 +306,8 @@ public class ProductPriceUtils {
 			LOGGER.error("Cannot create currency or locale instance for store " + store.getCode());
 		}
 
+		locale = DisplayLocaleContext.resolve(store).orElse(locale);
+
 		NumberFormat currencyInstance = null;
 
 		if (store.isCurrencyFormatNational()) {

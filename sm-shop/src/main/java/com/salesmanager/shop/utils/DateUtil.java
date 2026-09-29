@@ -15,6 +15,7 @@
 package com.salesmanager.shop.utils;
 
 import com.salesmanager.core.business.constants.Constants;
+import com.salesmanager.core.business.utils.DisplayLocaleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +24,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 
@@ -69,13 +71,51 @@ public class DateUtil {
 
 	}
 	
+	/**
+	 * Long date and time. Uses the display locale of the current request
+	 * when one was requested, otherwise EEE, d MMM yyyy HH:mm:ss Z
+	 * 
+	 * @param date
+	 * @return
+	 */
 	public static String formatLongDate(Date date) {
 		
 		if (date == null)
 			return null;
-		SimpleDateFormat format = new SimpleDateFormat(LONGDATE_FORMAT);
-		return format.format(date);
+		return DisplayLocaleContext.get()
+				.map(locale -> formatLongDate(date, locale))
+				.orElseGet(() -> new SimpleDateFormat(LONGDATE_FORMAT).format(date));
 		
+	}
+
+	/**
+	 * Date formatted using the conventions of the given locale
+	 * 
+	 * @param date
+	 * @param locale
+	 * @return
+	 */
+	public static String formatDate(Date date, Locale locale) {
+
+		if (date == null)
+			return null;
+		return DateFormat.getDateInstance(DateFormat.MEDIUM, locale).format(date);
+
+	}
+
+	/**
+	 * Long date and time formatted using the conventions of the given locale
+	 * 
+	 * @param date
+	 * @param locale
+	 * @return
+	 */
+	public static String formatLongDate(Date date, Locale locale) {
+
+		if (date == null)
+			return null;
+		return DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.MEDIUM, locale).format(date);
+
 	}
 
 	/**
