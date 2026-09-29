@@ -33,6 +33,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import com.salesmanager.core.business.configuration.CoreApplicationConfiguration;
 import com.salesmanager.shop.filter.CorsFilter;
+import com.salesmanager.shop.filter.LocaleFormattingInterceptor;
 import com.salesmanager.shop.filter.XssFilter;
 import com.salesmanager.shop.utils.LabelUtils;
 
@@ -95,6 +96,10 @@ public class ShopApplicationConfiguration implements WebMvcConfigurer {
         // REST api
         .addPathPatterns("/api/**");
 
+    registry
+        .addInterceptor(localeFormattingInterceptor())
+        .addPathPatterns("/api/**");
+
   }
 
   @Bean
@@ -119,6 +124,11 @@ public class ShopApplicationConfiguration implements WebMvcConfigurer {
   @Bean
   public CorsFilter corsFilter() {
     return new CorsFilter();
+  }
+
+  @Bean
+  public LocaleFormattingInterceptor localeFormattingInterceptor() {
+    return new LocaleFormattingInterceptor();
   }
 
 
