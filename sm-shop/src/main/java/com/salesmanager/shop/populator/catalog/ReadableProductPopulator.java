@@ -49,6 +49,7 @@ import com.salesmanager.shop.model.catalog.product.product.ProductSpecification;
 import com.salesmanager.shop.model.catalog.product.type.ProductTypeDescription;
 import com.salesmanager.shop.model.catalog.product.type.ReadableProductType;
 import com.salesmanager.shop.utils.DateUtil;
+import com.salesmanager.shop.utils.ProductDescriptionUtils;
 import com.salesmanager.shop.utils.ImageFilePath;
 
 
@@ -100,12 +101,12 @@ public class ReadableProductPopulator extends
 	        if(source.getDescriptions()!=null && source.getDescriptions().size()>0) {
 	          for(ProductDescription desc : source.getDescriptions()) {
                 if(language != null && desc.getLanguage()!=null && desc.getLanguage().getId().intValue() == language.getId().intValue()) {
-                    description = desc;
                     break;
                 } else {
                   fulldescriptions.add(populateDescription(desc));
                 }
               }
+	          description = ProductDescriptionUtils.resolve(source.getDescriptions(), language, store).orElse(description);
 	        }
 
 		     if(target instanceof ReadableProductFull) {

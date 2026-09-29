@@ -35,6 +35,7 @@ import com.salesmanager.shop.model.catalog.product.type.ReadableProductType;
 import com.salesmanager.shop.model.references.DimensionUnitOfMeasure;
 import com.salesmanager.shop.model.references.WeightUnitOfMeasure;
 import com.salesmanager.shop.utils.DateUtil;
+import com.salesmanager.shop.utils.ProductDescriptionUtils;
 import com.salesmanager.shop.utils.ImageFilePath;
 
 @Component
@@ -85,12 +86,14 @@ public class ReadableProductDefinitionMapper implements Mapper<Product, Readable
 			for (ProductDescription desc : source.getDescriptions()) {
 				if (language != null && desc.getLanguage() != null
 						&& desc.getLanguage().getId().intValue() == language.getId().intValue()) {
-					description = desc;
 					break;
 				} else {
 					fulldescriptions.add(populateDescription(desc));
 				}
 			}
+		}
+		if (language != null) {
+			description = ProductDescriptionUtils.resolve(source.getDescriptions(), language, store).orElse(null);
 		}
 
 /*		if (source.getProductReviewAvg() != null) {

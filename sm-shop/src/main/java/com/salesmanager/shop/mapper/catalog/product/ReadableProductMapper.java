@@ -54,6 +54,7 @@ import com.salesmanager.shop.model.references.DimensionUnitOfMeasure;
 import com.salesmanager.shop.model.references.WeightUnitOfMeasure;
 import com.salesmanager.shop.store.api.exception.ConversionRuntimeException;
 import com.salesmanager.shop.utils.DateUtil;
+import com.salesmanager.shop.utils.ProductDescriptionUtils;
 import com.salesmanager.shop.utils.ImageFilePath;
 
 /**
@@ -108,14 +109,8 @@ public class ReadableProductMapper implements Mapper<Product, ReadableProduct> {
 		destination.setDateAvailable(DateUtil.formatDate(source.getDateAvailable()));
 
 		ProductDescription description = null;
-		if (source.getDescriptions() != null && source.getDescriptions().size() > 0) {
-			for (ProductDescription desc : source.getDescriptions()) {
-				if (language != null && desc.getLanguage() != null
-						&& desc.getLanguage().getId().intValue() == language.getId().intValue()) {
-					description = desc;
-					break;
-				}
-			}
+		if (language != null) {
+			description = ProductDescriptionUtils.resolve(source.getDescriptions(), language, store).orElse(null);
 		}
 		destination.setId(source.getId());
 		destination.setAvailable(source.isAvailable());

@@ -24,6 +24,7 @@ import com.salesmanager.shop.model.catalog.product.product.ProductSpecification;
 import com.salesmanager.shop.model.entity.ReadableDescription;
 import com.salesmanager.shop.store.api.exception.ConversionRuntimeException;
 import com.salesmanager.shop.utils.DateUtil;
+import com.salesmanager.shop.utils.ProductDescriptionUtils;
 import com.salesmanager.shop.utils.ImageFilePath;
 
 @Component
@@ -51,12 +52,9 @@ public class ReadableMinimalProductMapper implements Mapper<Product, ReadableMin
 		Validate.notNull(destination, "ReadableMinimalProduct cannot be null");
 
 
-		for (ProductDescription desc : source.getDescriptions()) {
-			if (language != null && desc.getLanguage() != null
-					&& desc.getLanguage().getId().intValue() == language.getId().intValue()) {
-				destination.setDescription(this.description(desc));
-				break;
-			}
+		if (language != null) {
+			ProductDescriptionUtils.resolve(source.getDescriptions(), language, store)
+					.ifPresent(desc -> destination.setDescription(this.description(desc)));
 		}
 		
 		destination.setId(source.getId());
