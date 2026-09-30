@@ -1,5 +1,7 @@
 package com.salesmanager.shop.model.customer;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 import com.salesmanager.shop.model.customer.attribute.PersistableCustomerAttribute;
 import com.salesmanager.shop.model.security.PersistableGroup;
@@ -15,7 +17,9 @@ public class PersistableCustomer extends CustomerEntity {
 	 * 
 	 */
     @ApiModelProperty(notes = "Customer password")
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String password = null;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String repeatPassword = null;
 	private static final long serialVersionUID = 1L;
 	private List<PersistableCustomerAttribute> attributes;

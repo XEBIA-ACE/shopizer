@@ -351,15 +351,24 @@ public class CustomerFacadeImpl implements CustomerFacade {
       throw new UserAlreadyExistException("User already exist");
     }
 
-    Customer customerModel = getCustomerModel(customer, merchantStore, language);
+    String rawPassword = customer.getPassword();
+    customer.setPassword(null);
+    customer.setRepeatPassword(null);
+
+    Customer customerModel = customerPopulator.populate(customer, merchantStore, language);
     if (customerModel == null) {
-      LOG.equals("Unable to create customer in system");
-      // throw new CustomerRegistrationException( "Unable to register customer" );
+      LOG.error("Unable to create customer in system");
       throw new Exception("Unable to register customer");
     }
+    customerModel.setNick(customer.getUserName());
+    customerModel.setAnonymous(false);
+    if (StringUtils.isBlank(customerModel.getNick())) {
+      customerModel.setNick(customerModel.getEmailAddress());
+    }
+    setDefaultCustomerGroups(customerModel);
 
     LOG.info("About to persist customer to database.");
-    customerService.saveOrUpdate(customerModel);
+    customerService.registerCustomer(customerModel, rawPassword);
 
     LOG.info("Returning customer data to controller..");
     // return customerEntityPoulator(customerModel,merchantStore);
@@ -410,6 +419,11 @@ public class CustomerFacadeImpl implements CustomerFacade {
       }
     }
 
+    setDefaultCustomerGroups(customer);
+
+  }
+
+  private void setDefaultCustomerGroups(Customer customer) throws Exception {
     if (CollectionUtils.isEmpty(customer.getGroups())) {
       List<Group> groups = getListOfGroups(GroupType.CUSTOMER);
       for (Group group : groups) {
@@ -419,7 +433,6 @@ public class CustomerFacadeImpl implements CustomerFacade {
       }
 
     }
-
   }
 
 

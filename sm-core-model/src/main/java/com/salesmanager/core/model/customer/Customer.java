@@ -355,4 +355,9 @@ public class Customer extends SalesManagerEntity<Long, Customer> implements Audi
 		this.credentialsResetRequest = credentialsResetRequest;
 	}
 	
+	@Override
+	public String toString() {
+		return "Customer [id=" + getId() + ", nick=" + nick + "]";
+	}
+
 }
