@@ -1,5 +1,6 @@
 package com.salesmanager.shop.store.api.v1.customer;
 
+import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.salesmanager.core.business.exception.PasswordHashingException;
 import com.salesmanager.core.model.customer.Customer;
 import com.salesmanager.core.model.merchant.MerchantStore;
 import com.salesmanager.core.model.reference.language.Language;
@@ -63,6 +65,8 @@ import springfox.documentation.annotations.ApiIgnore;
 public class AuthenticateCustomerApi {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticateCustomerApi.class);
+
+    private static final String REGISTRATION_ERROR_MESSAGE = "Registration could not be completed. Please try again.";
 
     @Value("${authToken.header}")
     private String tokenHeader;
@@ -114,7 +118,16 @@ public class AuthenticateCustomerApi {
             Validate.notNull(customer.getBilling(),"Requires customer Country code");
             Validate.notNull(customer.getBilling().getCountry(),"Requires customer Country code");
             
-            customerFacade.registerCustomer(customer, merchantStore, language);
+            Validate.notEmpty(customer.getPassword(), "Password cannot be empty");
+            String rawPassword = customer.getPassword();
+
+            try {
+                customerFacade.registerCustomer(customer, merchantStore, language);
+            } catch (PasswordHashingException e) {
+                LOGGER.error("Customer registration rejected: password could not be secured", e);
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(Collections.singletonMap("error", REGISTRATION_ERROR_MESSAGE));
+            }
             
             // Perform the security
             Authentication authentication = null;
@@ -123,7 +136,7 @@ public class AuthenticateCustomerApi {
                 authentication = jwtCustomerAuthenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(
                                 customer.getUserName(),
-                                customer.getPassword()
+                                rawPassword
                         )
                 );
                 

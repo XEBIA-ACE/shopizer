@@ -5,9 +5,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.salesmanager.core.business.exception.PasswordHashingException;
 import com.salesmanager.core.business.exception.ServiceException;
 import com.salesmanager.core.business.repositories.customer.CustomerRepository;
 import com.salesmanager.core.business.services.common.generic.SalesManagerEntityServiceImpl;
@@ -34,6 +38,9 @@ public class CustomerServiceImpl extends SalesManagerEntityServiceImpl<Long, Cus
 	
 	@Inject
 	private GeoLocation geoLocation;
+
+	@Inject
+	private PasswordEncoder passwordEncoder;
 
 	
 	@Inject
@@ -95,6 +102,29 @@ public class CustomerServiceImpl extends SalesManagerEntityServiceImpl<Long, Cus
 			super.create(customer);
 
 		}
+	}
+
+	@Override
+	public void registerCustomer(Customer customer, String rawPassword) throws ServiceException {
+		Validate.notNull(customer, "Customer cannot be null");
+		Validate.isTrue(customer.getId() == null || customer.getId() == 0, "Customer is already registered");
+		if (StringUtils.isBlank(rawPassword)) {
+			throw new ServiceException(ServiceException.EXCEPTION_VALIDATION, "Password cannot be empty");
+		}
+
+		String hashedPassword;
+		try {
+			hashedPassword = passwordEncoder.encode(rawPassword);
+		} catch (RuntimeException e) {
+			throw new PasswordHashingException("Unable to hash customer password", e);
+		}
+		if (StringUtils.isBlank(hashedPassword) || hashedPassword.equals(rawPassword)) {
+			throw new PasswordHashingException("Unable to hash customer password");
+		}
+
+		customer.setPassword(hashedPassword);
+		LOGGER.debug("Registering new customer");
+		super.create(customer);
 	}
 
 	public void delete(Customer customer) throws ServiceException {

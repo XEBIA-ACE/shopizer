@@ -23,6 +23,17 @@ public interface CustomerService  extends SalesManagerEntityService<Long, Custom
 
 	void saveOrUpdate(Customer customer) throws ServiceException ;
 
+	/**
+	 * Registers a new customer. The raw password is hashed with the application
+	 * {@link org.springframework.security.crypto.password.PasswordEncoder} before
+	 * the customer is persisted; nothing is persisted if hashing fails.
+	 * @param customer new customer (without id)
+	 * @param rawPassword plain-text password, never stored
+	 * @throws com.salesmanager.core.business.exception.PasswordHashingException when the password cannot be hashed
+	 * @throws ServiceException
+	 */
+	void registerCustomer(Customer customer, String rawPassword) throws ServiceException;
+
 	CustomerList getListByStore(MerchantStore store, CustomerCriteria criteria);
 
 	Customer getByNick(String nick, int storeId);
