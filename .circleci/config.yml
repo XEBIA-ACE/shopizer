@@ -11,10 +11,7 @@ orbs:
 executors:
   shopizer-ci:
     docker:
-      - image: shopizerecomm/ci:java11
-        auth:
-          username: shopizerecomm
-          password: $DOCKERHUB_PASSWORD  
+      - image: cimg/openjdk:17.0
       
 working_directory: /tmp
 
@@ -27,10 +24,11 @@ jobs:
       - checkout
       - run: echo "shopizer build and test (1)"
       - run:
-          name: Run shell script
+          name: Build and test
           command: |
             set -x
-            /home/shopizer/tools/shopizer.sh tests
+            java -version
+            mvn -B clean install
       - persist_to_workspace:
           root: .
           paths:
