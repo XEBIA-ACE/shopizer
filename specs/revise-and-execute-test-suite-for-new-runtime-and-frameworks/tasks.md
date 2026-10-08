@@ -18,32 +18,16 @@
 
 ---
 
-# Task List
+# Task Document
 
-- [ ] **Task 001**: [Objective] Ensure Java 17 is aligned with Maven executions.
-  - *Components/Involved Files*: pom.xml, .circleci/config.yml
-  - *Dependencies*: Java installs, Maven toolchain
-  - *Action*: Replace and configure target versions
-  - *Acceptance Criteria*: Build passes for Maven executions
-  - *Evidence ID*: R9
+- [ ] **T001**: Prepare development branch for upgrade implementation.
+  - **Objective**: Ensure environment is ready for upgrades
+  - **Evidence**: Development environment set up correctly
 
-- [ ] **Task 002**: [Objective] Upgrade Spring Boot Framework Version
-  - *Components/Involved Files*: pom.xml, all Java Classes
-  - *Dependencies*: Spring Boot starter packs
-  - *Action*: Define Spring Boot 3.1.4 parent in Maven POM files
-  - *Acceptance Criteria*: Spring Boot application runs without error
-  - *Evidence ID*: R5
+- [ ] **T002**: Upgrade Java to version 17.
 
-- [ ] **Task 003**: [Objective] Dependency Alignment
-  - *Components/Involved Files*: build scripts, Maven configurations
-  - *Dependencies*: Elasticsearch client connections, Hibernate packages
-  - *Action*: Update Elasticsearch to 7.17.9 and verify Hibernate integrity
-  - *Acceptance Criteria*: Service connections maintain stability
-  - *Evidence ID*: R7
+- [ ] **T003**: Upgrade Spring Boot to version 3.1.4.
 
-- [ ] **Task 004**: [Objective] Test Environment Integrity
-  - *Components/Involved Files*: JUnit tests
-  - *Dependencies*: Existing test cases
-  - *Action*: Run all tests, guided by new versions
-  - *Acceptance Criteria*: Complete pass on JUnit analyses
-  - *Evidence ID*: R10
+- [ ] **T004**: Perform integration testing to ensure system stability with new versions.
+
+- [ ] **T005**: If tests pass, deploy to staging environment.
