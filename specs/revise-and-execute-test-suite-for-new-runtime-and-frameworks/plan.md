@@ -9,39 +9,25 @@
 
 ---
 
-# Upgrade Plan
+# Plan Document
 
 ## Preconditions
-- Verify all current dependencies' compatibility with Java 17 and Spring Boot 3.1.4.
-- Acquire all necessary information for successful migration.
+- Ensure server stability for continuous integration and indexing operations.
 
 ## Strategy
-Stage the upgrade in prints.
+- Perform upgrades in an isolated development branch.
 
-### Phase 1: Preparation
-- Analyze codebase for areas with deprecated methods.
-- Record inapplicable plugins or configurations for Java 17.
+### Phases
+1. **Setup Development Environment**
+   - Prepare branch with existing DevOps practices.
+2. **Upgrade Implementation**
+   - Upgrade Java to version 17
+   - Upgrade Spring Boot to 3.1.4
+3. **Testing and Validation**
+   - Implement compatibility testing.
+   - Resolve issues stemming from integration.
+4. **Deployment and Monitoring**
+   - Deploy changes to staging environment for validation.
 
-### Phase 2: Upgrade Java and Spring Boot
-- Mechanically change Java version in CI/CD settings and command-line instructions.
-- Modify Maven POM files to the required framework versions.
-
-### Phase 3: Dependency
-- Upgrade Elasticsearch and Hibernate libraries where specific version alignment is needed.
-- Execute all relevant configuration file updates.
-
-### Phase 4: Test
-- Run full test suites and bug-hunting sessions.
-- Code reviews for adapted areas.
-
-### Deployment Phase
-- Gradual feature rollout with Java 17 and Spring Boot.
-- Confirm that build artifacts within CircleCI are aligned.
-
-## Fallback Plan
-- Rollback to last stable deployment if live tests indicate severe issues.
-- Record all changes for immediate reference in fallback scenarios.
-
-## Monitoring
-- Monitor runtime logs for unexpected behaviors
-- Actively check on service statuses for uptime post-upgrade phases.
+## Rollback
+- If major issues occur, revert to previous stable branch.
