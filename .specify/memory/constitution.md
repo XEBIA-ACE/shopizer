@@ -9,21 +9,18 @@
 
 # Constitution Document
 
-## Objective
-Upgrade the primary software stack components to leverage the latest features, security, and performance improvements available in Java 17 and Spring Boot 3.1.4.
+## Objectives
+To ensure the software system is up-to-date with the latest standards in security and performance by upgrading key frameworks and dependencies.
 
 ## Guiding Principles
-- Ensure minimal disruption to existing deployment cycles during upgrade series.
-- Maintain compatibility across new runtime and modular components.
+- Prioritize security and compatibility
+- Maintain system stability throughout transitions
 
 ## Constraints
-- Current resource availability and lockdown on tooling compatibility hinder seamless transition to Java 17.
-- Expose improvements that are specific to the Java upgrade cycle wherever possible.
+- Ensure continuity of service during updates
 
 ## Measurable Quality Gates
-- All tests must show positive outcomes on Java 17 environment configurations.
-- Successful resource handling, as shown in API logs under new deployment setups, using Spring Boot 3.1.4 changes.
+- Successful build and deployment with zero errors on the upgraded system.
 
 ## Decision Log
-- Decision made to proceed on Java and Spring Boot upgrade based on notable EOL criteria and feature scope for application sustainment.
-- Phases committed on recorded tech detail lacking due to limitations in tooling exposure.
+- Upgraded key dependencies to mitigate security risks and increase system performance.
