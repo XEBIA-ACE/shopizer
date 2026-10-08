@@ -38,49 +38,34 @@ These facts are generated from Tech Analysis and the selected Upgrade Option and
 # Specification Document
 
 ## Summary
+This document outlines the plan to upgrade key software components in the Shopizer e-commerce platform, focusing on upgrading Java from version 11 to 17, Spring Boot from 2.5.12 to 3.1.4, and updating Elasticsearch and Hibernate to compatible versions. The upgrades aim to leverage new features and enhance the security posture of the application.
 
 ## Motivation
-The current tech stack is outdated, posing security risks and missing out on recent improvements. The identified upgrades are necessary to maintain industry standards and leverage new capabilities.
+The primary driver of these upgrades is the identified EOL (end-of-life) status of the current Java version and the high urgency to update Spring Boot to its latest stable version to mitigate security risks associated with outdated dependencies.
 
 ## Repository Evidence
-Due to tooling limitations, the codebase's architecture details weren't fully extracted. Therefore, known configurations from tech analysis are relied upon.
+Due to server errors, specific indexing or architecture details could not be verified through Code Insights.
 
 ## Current State
-- **Runtime**: Java 11
-- **Framework**: Spring Boot 2.5.12
-- **Dependencies**: Elasticsearch 7.5.2, unversioned Hibernate
+- **Java Version**: 11 (EOL)
+- **Spring Boot**: 2.5.12
+- **Elasticsearch**: 7.5.2
 
 ## Target State
-- **Runtime**: Java 17 (latest LTS)
-- **Framework**: Spring Boot 3.1.4
-- **Dependencies**: Update Elasticsearch and Hibernate to compatible versions
-
-## Compatibility Matrix
-The upgrades maintain backward compatibility with existing infrastructure constraints but require revisions for API touchpoints and configuration files impacted by version changes.
+- **Java Version**: 17 (LTS)
+- **Spring Boot**: 3.1.4
+- **Elasticsearch**: 7.17.9
 
 ## Scope
-Focus on adapting all Java 17 updates in Java files, Spring Boot framework updates, and aligning Elasticsearch functionalities with the updated environment.
-
-## Affected Components/Interfaces
-- Source Code: Java classes interfacing with the runtime and framework
-- Configuration: Maven build files updating versions
-- Infrastructure: CircleCI config adjustments
-
-## Compatibility and Breaking Changes
-Code-level refactoring may be necessary for deprecated methods and API updates within both Java SE and Spring Boot reflecting changes from JDK 11 to 17 and Spring Boot 2.5 to 3.x API.
+Upgrade critical dependencies and ensure compatibility with the latest versions without adding new features.
 
 ## Testable Acceptance Criteria
-- Application compiles and runs on Java 17
-- Integration tests pass on Spring Boot 3.1.4
-- Elasticsearch services operate on updated configurations
+- Application runs on Java 17 without issues.
+- Compatibility with Spring Boot 3.1.4 is achieved.
+- Elasticsearch upgraded and tested.
 
 ## Risks
-- Incompatibility with existing code configurations, requiring significant refactoring.
-- Risk of downtime during upgrade phased releases.
-- Dependency on Elasticsearch update availability matching system requirements.
-
-## Out-of-Scope Items
-- Frontend interface changes are not covered in this upgrade.
+- Compatibility issues with existing codebase and dependencies.
 
 ## Open Questions
-- Real-time operational deployment mechanics, e.g., Kubernetes manifests not explicitly identified.
+- Detailed compatibility checks awaiting confirmation post-system stability resolution.
