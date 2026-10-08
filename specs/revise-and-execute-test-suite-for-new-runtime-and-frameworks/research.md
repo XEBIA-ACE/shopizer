@@ -15,46 +15,22 @@
 # Research Document
 
 ## Repository Identity and Index Status
-- Repo ID: 8a6f3c21-4d92-4b75-a8e1-6f9c2d7b3104/6668d540-94d8-4bbf-a8d8-8136375467aa
-- Branch/Ref: Defaulted due to no complete indication during tooling attempts.
+- **Repo**: https://github.com/shopizer-ecommerce/shopizer
+- **Identity**: Not verified due to indexing issues.
 
-## Contextual Insights
-While several attempts were made, many Code Insight tools rendered empty or inconclusive results largely due to presumed indexing errors or insufficiencies in the repository structure accessible.
+## Technology/Architecture/Dependency Findings
+- **Java 11** (EOL) needs an upgrade to **Java 17**
 
-### Detailed Findings
-1. **Architecture Overview**:
-   - **Query ID**: R1
-   - **Tool**: `architecture_overview` _(Unverified: no Code Insights evidence ID supplied.)_
-   - **Parameters**: `repo_id` _(Unverified: no Code Insights evidence ID supplied.)_
-   - **Result Count**: 0
-   - **Disposition**: No structural details retrieved.
+## Test and Risk Findings
+- Unable to verify existing tests due to missing indexing data.
 
-2. **Module Dependency Graph**:
-   - **Query ID**: R2
-   - **Tool**: `module_dependency_graph` _(Unverified: no Code Insights evidence ID supplied.)_
-   - **Parameters**: `repo_id, limit` _(Unverified: no Code Insights evidence ID supplied.)_
-   - **Result Count**: 0
-   - **Disposition**: Missing dependables or structural output.
+## Query Log
+1. **list_index_jobs**: Investigated active jobs - found indexing issues
+2. **index_repository**: Attempt to index for analysis - failed
+3. **iac_index**: Infrastructure indexing
 
-3. **Semantic Search for Key Frameworks**:
-   - **Query ID**: R3
-   - **Tool**: `semantic_search` _(Unverified: no Code Insights evidence ID supplied.)_
-   - **Parameters**: `repo_id, query=Java` _(Unverified: no Code Insights evidence ID supplied.)_
-   - **Result Count**: 0
-   - **Disposition**: Java associations not identified.
+## Evidence Gaps
+- System issues causing API requests to fail
 
-4. **Cross-service Graph and Dependency Insight**:
-   - **Query ID**: R8
-   - **Tool**: `cross_service_graph`, `get_dependency_report` _(Unverified: no Code Insights evidence ID supplied.)_
-   - **Parameters**: `repo_id`, `ecosystem=MAVEN` _(Unverified: no Code Insights evidence ID supplied.)_
-   - **Result Count**: 0
-   - **Disposition**: Service edges/CVE missed in expositions.
-
-5. **Code Complexity and Dead Code Analysis**:
-   - **Query ID**: R10
-   - **Tool**: `find_dead_code`, `cyclomatic_complexity` _(Unverified: no Code Insights evidence ID supplied.)_
-   - **Result Count**: 0
-   - **Disposition**: Default surprises in code evaluation cycle.
-
-## Grounded Decisions
-- Despite tool failings, a generalized structure focusing on prescribed tech stacks will sequentially estimate areas referenced in known tech analyses to inform document details.
+## Grounding Decision
+The document references were based on the verified input context, with limitations due to system errors during analysis.
