@@ -19,7 +19,7 @@ public interface ManufacturerRepository extends JpaRepository<Manufacturer, Long
 	@Query("select m from Manufacturer m left join fetch m.descriptions md join fetch m.merchantStore ms where ms.id=?1")
 	List<Manufacturer> findByStore(Integer storeId);
 	
-    @Query("select m from Manufacturer m join fetch m.descriptions md join fetch m.merchantStore ms join fetch md.language mdl where ms.id=?1 and mdl.id=?2 and (?3 is null or md.name like %?3%)")
+    @Query("select m from Manufacturer m join fetch m.descriptions md join fetch m.merchantStore ms join fetch md.language mdl where ms.id=?1 and mdl.id=?2 and (?3 is null or md.name like concat('%', ?3, '%'))")
 	//@Query("select m from Manufacturer m join fetch m.descriptions md join fetch m.merchantStore ms join fetch md.language mdl where ms.id=?1 and mdl.id=?2")
 	//@Query("select m from Manufacturer m left join m.descriptions md join fetch m.merchantStore ms where ms.id=?1")
 	List<Manufacturer> findByStore(Integer storeId, Integer languageId, String name);
@@ -40,6 +40,6 @@ public interface ManufacturerRepository extends JpaRepository<Manufacturer, Long
 			+ "join fetch manufacturer.merchantStore pms "
 			+ "join p.categories pc "
 			+ "where pms.id = ?1 "
-			+ "and pc.id IN (select c.id from Category c where c.lineage like %?2% and pmd.language.id = ?3)")
+			+ "and pc.id IN (select c.id from Category c where c.lineage like concat('%', ?2, '%') and pmd.language.id = ?3)")
 	List<Manufacturer> findByProductInCategoryId(Integer storeId, String lineage, Integer languageId);
 }
