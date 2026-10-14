@@ -1,0 +1,5170 @@
+{
+  "schema_version": 1,
+  "generator": "tools/javax-audit/javax_audit.py",
+  "commit": "6a4a0a65a3408ee8f62597b51d1b3aac24b77dee",
+  "scope": {
+    "modules": [
+      "sm-core",
+      "sm-core-model",
+      "sm-core-modules",
+      "sm-shop",
+      "sm-shop-model"
+    ],
+    "java_files_scanned": 1210,
+    "java_files_per_module": {
+      "sm-core": 358,
+      "sm-core-model": 187,
+      "sm-core-modules": 15,
+      "sm-shop": 326,
+      "sm-shop-model": 323,
+      "(root)": 1
+    },
+    "source_sets": {
+      "main": 1167,
+      "test": 37,
+      "unknown": 6
+    }
+  },
+  "definitions": {
+    "reference": "One textual javax.* occurrence in Java code (import, static/wildcard import, or inline fully-qualified name). Comments and string literals are ignored. Each reference is one edit in a namespace migration.",
+    "annotation_usage": "An @Annotation site whose simple name is bound to a single-type javax.* import in the same file. Not an edit by itself (it follows the import), reported to size the annotation surface.",
+    "migration_required": "yes when the type moved to jakarta.* in Jakarta EE 9+ (Spring Boot 3); no when it is part of the JDK (e.g. javax.crypto, javax.imageio).",
+    "layer": "Heuristic from package path / file name, first match wins: repository (repository|repositories|dao, *Repository*), service (service|services|facade|modules, *Service*, *Facade*), controller (controller|api|filter|rest, *Controller, *Api, *Filter), configuration (config|configuration|application, *Config*, *Application), model/DTO (sm-core-model, sm-shop-model, model|entity|dto packages), else other."
+  },
+  "totals": {
+    "files_with_javax": 352,
+    "files_requiring_migration": 348,
+    "references": 1512,
+    "references_requiring_migration": 1504,
+    "references_jdk_unchanged": 8,
+    "annotation_usages": 2081,
+    "annotation_usages_requiring_migration": 2081,
+    "by_kind": {
+      "import": 1498,
+      "static_import": 0,
+      "wildcard_import": 0,
+      "fqn_reference": 14,
+      "annotation_usage": 2081
+    }
+  },
+  "by_family": {
+    "servlet": {
+      "references": 110,
+      "references_requiring_migration": 110,
+      "files": 59,
+      "annotation_usages": 1,
+      "packages": {
+        "javax.servlet.http": 89,
+        "javax.servlet": 20,
+        "javax.servlet.annotation": 1
+      },
+      "top_types": {
+        "javax.servlet.http.HttpServletRequest": 55,
+        "javax.servlet.http.HttpServletResponse": 32,
+        "javax.servlet.ServletException": 7,
+        "javax.servlet.FilterChain": 3,
+        "javax.servlet.Filter": 2,
+        "javax.servlet.FilterConfig": 2,
+        "javax.servlet.ServletRequest": 2,
+        "javax.servlet.ServletResponse": 2,
+        "javax.servlet.ServletContextEvent": 1,
+        "javax.servlet.http.HttpSession": 1
+      },
+      "jakarta_targets": [
+        "javax.servlet -> jakarta.servlet",
+        "javax.servlet.annotation -> jakarta.servlet.annotation",
+        "javax.servlet.http -> jakarta.servlet.http"
+      ]
+    },
+    "persistence": {
+      "references": 1062,
+      "references_requiring_migration": 1062,
+      "files": 109,
+      "annotation_usages": 1365,
+      "packages": {
+        "javax.persistence": 1062
+      },
+      "top_types": {
+        "javax.persistence.Entity": 81,
+        "javax.persistence.Table": 81,
+        "javax.persistence.TableGenerator": 80,
+        "javax.persistence.Column": 78,
+        "javax.persistence.JoinColumn": 76,
+        "javax.persistence.ManyToOne": 75,
+        "javax.persistence.Id": 64,
+        "javax.persistence.GeneratedValue": 63,
+        "javax.persistence.GenerationType": 63,
+        "javax.persistence.UniqueConstraint": 48
+      },
+      "jakarta_targets": [
+        "javax.persistence -> jakarta.persistence"
+      ]
+    },
+    "validation": {
+      "references": 123,
+      "references_requiring_migration": 123,
+      "files": 84,
+      "annotation_usages": 196,
+      "packages": {
+        "javax.validation.constraints": 66,
+        "javax.validation": 57
+      },
+      "top_types": {
+        "javax.validation.Valid": 41,
+        "javax.validation.constraints.NotEmpty": 35,
+        "javax.validation.constraints.Pattern": 10,
+        "javax.validation.constraints.NotNull": 8,
+        "javax.validation.constraints.Email": 6,
+        "javax.validation.Constraint": 4,
+        "javax.validation.ConstraintValidator": 4,
+        "javax.validation.ConstraintValidatorContext": 4,
+        "javax.validation.Payload": 4,
+        "javax.validation.constraints.Size": 3
+      },
+      "jakarta_targets": [
+        "javax.validation -> jakarta.validation",
+        "javax.validation.constraints -> jakarta.validation.constraints"
+      ]
+    },
+    "ws.rs": {
+      "references": 3,
+      "references_requiring_migration": 3,
+      "files": 2,
+      "annotation_usages": 2,
+      "packages": {
+        "javax.ws.rs.core": 2,
+        "javax.ws.rs": 1
+      },
+      "top_types": {
+        "javax.ws.rs.core.MediaType": 2,
+        "javax.ws.rs.Produces": 1
+      },
+      "jakarta_targets": [
+        "javax.ws.rs -> jakarta.ws.rs",
+        "javax.ws.rs.core -> jakarta.ws.rs.core"
+      ]
+    },
+    "inject": {
+      "references": 182,
+      "references_requiring_migration": 182,
+      "files": 179,
+      "annotation_usages": 503,
+      "packages": {
+        "javax.inject": 182
+      },
+      "top_types": {
+        "javax.inject.Inject": 179,
+        "javax.inject.Named": 3
+      },
+      "jakarta_targets": [
+        "javax.inject -> jakarta.inject"
+      ]
+    },
+    "annotation": {
+      "references": 12,
+      "references_requiring_migration": 12,
+      "files": 12,
+      "annotation_usages": 14,
+      "packages": {
+        "javax.annotation": 12
+      },
+      "top_types": {
+        "javax.annotation.PostConstruct": 7,
+        "javax.annotation.Resource": 5
+      },
+      "jakarta_targets": [
+        "javax.annotation -> jakarta.annotation"
+      ]
+    },
+    "xml": {
+      "references": 0,
+      "references_requiring_migration": 0,
+      "files": 0,
+      "annotation_usages": 0,
+      "packages": {},
+      "top_types": {},
+      "jakarta_targets": []
+    },
+    "other": {
+      "references": 20,
+      "references_requiring_migration": 12,
+      "files": 5,
+      "annotation_usages": 0,
+      "packages": {
+        "javax.activation": 4,
+        "javax.crypto": 4,
+        "javax.mail": 4,
+        "javax.mail.internet": 4,
+        "javax.crypto.spec": 2,
+        "javax.imageio": 2
+      },
+      "top_types": {
+        "javax.activation.DataHandler": 2,
+        "javax.activation.DataSource": 2,
+        "javax.crypto.Cipher": 2,
+        "javax.imageio.ImageIO": 2,
+        "javax.mail.BodyPart": 1,
+        "javax.mail.Message": 1,
+        "javax.mail.MessagingException": 1,
+        "javax.mail.Multipart": 1,
+        "javax.mail.internet.InternetAddress": 1,
+        "javax.mail.internet.MimeBodyPart": 1
+      },
+      "jakarta_targets": [
+        "javax.activation -> jakarta.activation",
+        "javax.crypto -> (JDK, unchanged)",
+        "javax.crypto.spec -> (JDK, unchanged)",
+        "javax.imageio -> (JDK, unchanged)",
+        "javax.mail -> jakarta.mail",
+        "javax.mail.internet -> jakarta.mail.internet"
+      ]
+    }
+  },
+  "by_module": {
+    "sm-core": {
+      "java_files": 358,
+      "files_with_javax": 105,
+      "files_requiring_migration": 102,
+      "references": 153,
+      "references_requiring_migration": 148,
+      "share_of_references_pct": 10.12,
+      "annotation_usages": 236,
+      "by_family": {
+        "servlet": 0,
+        "persistence": 43,
+        "validation": 0,
+        "ws.rs": 0,
+        "inject": 85,
+        "annotation": 8,
+        "xml": 0,
+        "other": 17
+      },
+      "by_layer": {
+        "controller": 0,
+        "service": 96,
+        "repository": 40,
+        "model/DTO": 0,
+        "configuration": 3,
+        "other": 14
+      }
+    },
+    "sm-core-model": {
+      "java_files": 187,
+      "files_with_javax": 94,
+      "files_requiring_migration": 94,
+      "references": 1063,
+      "references_requiring_migration": 1063,
+      "share_of_references_pct": 70.3,
+      "annotation_usages": 1412,
+      "by_family": {
+        "servlet": 0,
+        "persistence": 1018,
+        "validation": 45,
+        "ws.rs": 0,
+        "inject": 0,
+        "annotation": 0,
+        "xml": 0,
+        "other": 0
+      },
+      "by_layer": {
+        "controller": 0,
+        "service": 0,
+        "repository": 0,
+        "model/DTO": 1039,
+        "configuration": 24,
+        "other": 0
+      }
+    },
+    "sm-core-modules": {
+      "java_files": 15,
+      "files_with_javax": 0,
+      "files_requiring_migration": 0,
+      "references": 0,
+      "references_requiring_migration": 0,
+      "share_of_references_pct": 0.0,
+      "annotation_usages": 0,
+      "by_family": {
+        "servlet": 0,
+        "persistence": 0,
+        "validation": 0,
+        "ws.rs": 0,
+        "inject": 0,
+        "annotation": 0,
+        "xml": 0,
+        "other": 0
+      },
+      "by_layer": {
+        "controller": 0,
+        "service": 0,
+        "repository": 0,
+        "model/DTO": 0,
+        "configuration": 0,
+        "other": 0
+      }
+    },
+    "sm-shop": {
+      "java_files": 326,
+      "files_with_javax": 134,
+      "files_requiring_migration": 133,
+      "references": 263,
+      "references_requiring_migration": 260,
+      "share_of_references_pct": 17.39,
+      "annotation_usages": 388,
+      "by_family": {
+        "servlet": 110,
+        "persistence": 1,
+        "validation": 45,
+        "ws.rs": 3,
+        "inject": 97,
+        "annotation": 4,
+        "xml": 0,
+        "other": 3
+      },
+      "by_layer": {
+        "controller": 148,
+        "service": 26,
+        "repository": 0,
+        "model/DTO": 2,
+        "configuration": 5,
+        "other": 82
+      }
+    },
+    "sm-shop-model": {
+      "java_files": 323,
+      "files_with_javax": 19,
+      "files_requiring_migration": 19,
+      "references": 33,
+      "references_requiring_migration": 33,
+      "share_of_references_pct": 2.18,
+      "annotation_usages": 45,
+      "by_family": {
+        "servlet": 0,
+        "persistence": 0,
+        "validation": 33,
+        "ws.rs": 0,
+        "inject": 0,
+        "annotation": 0,
+        "xml": 0,
+        "other": 0
+      },
+      "by_layer": {
+        "controller": 0,
+        "service": 0,
+        "repository": 0,
+        "model/DTO": 33,
+        "configuration": 0,
+        "other": 0
+      }
+    },
+    "(root)": {
+      "java_files": 1,
+      "files_with_javax": 0,
+      "files_requiring_migration": 0,
+      "references": 0,
+      "references_requiring_migration": 0,
+      "share_of_references_pct": 0.0,
+      "annotation_usages": 0,
+      "by_family": {
+        "servlet": 0,
+        "persistence": 0,
+        "validation": 0,
+        "ws.rs": 0,
+        "inject": 0,
+        "annotation": 0,
+        "xml": 0,
+        "other": 0
+      },
+      "by_layer": {
+        "controller": 0,
+        "service": 0,
+        "repository": 0,
+        "model/DTO": 0,
+        "configuration": 0,
+        "other": 0
+      }
+    }
+  },
+  "by_layer": {
+    "controller": {
+      "java_files": 87,
+      "files_with_javax": 56,
+      "files_requiring_migration": 56,
+      "references": 148,
+      "references_requiring_migration": 148,
+      "share_of_references_pct": 9.79,
+      "annotation_usages": 195,
+      "by_family": {
+        "servlet": 71,
+        "persistence": 0,
+        "validation": 32,
+        "ws.rs": 3,
+        "inject": 41,
+        "annotation": 1,
+        "xml": 0,
+        "other": 0
+      },
+      "by_module": {
+        "sm-core": 0,
+        "sm-core-model": 0,
+        "sm-core-modules": 0,
+        "sm-shop": 148,
+        "sm-shop-model": 0,
+        "(root)": 0
+      }
+    },
+    "service": {
+      "java_files": 296,
+      "files_with_javax": 101,
+      "files_requiring_migration": 99,
+      "references": 122,
+      "references_requiring_migration": 118,
+      "share_of_references_pct": 8.07,
+      "annotation_usages": 287,
+      "by_family": {
+        "servlet": 2,
+        "persistence": 2,
+        "validation": 0,
+        "ws.rs": 0,
+        "inject": 94,
+        "annotation": 8,
+        "xml": 0,
+        "other": 16
+      },
+      "by_module": {
+        "sm-core": 96,
+        "sm-core-model": 0,
+        "sm-core-modules": 0,
+        "sm-shop": 26,
+        "sm-shop-model": 0,
+        "(root)": 0
+      }
+    },
+    "repository": {
+      "java_files": 92,
+      "files_with_javax": 11,
+      "files_requiring_migration": 11,
+      "references": 40,
+      "references_requiring_migration": 40,
+      "share_of_references_pct": 2.65,
+      "annotation_usages": 10,
+      "by_family": {
+        "servlet": 0,
+        "persistence": 40,
+        "validation": 0,
+        "ws.rs": 0,
+        "inject": 0,
+        "annotation": 0,
+        "xml": 0,
+        "other": 0
+      },
+      "by_module": {
+        "sm-core": 40,
+        "sm-core-model": 0,
+        "sm-core-modules": 0,
+        "sm-shop": 0,
+        "sm-shop-model": 0,
+        "(root)": 0
+      }
+    },
+    "model/DTO": {
+      "java_files": 465,
+      "files_with_javax": 112,
+      "files_requiring_migration": 112,
+      "references": 1074,
+      "references_requiring_migration": 1074,
+      "share_of_references_pct": 71.03,
+      "annotation_usages": 1435,
+      "by_family": {
+        "servlet": 0,
+        "persistence": 994,
+        "validation": 80,
+        "ws.rs": 0,
+        "inject": 0,
+        "annotation": 0,
+        "xml": 0,
+        "other": 0
+      },
+      "by_module": {
+        "sm-core": 0,
+        "sm-core-model": 1039,
+        "sm-core-modules": 0,
+        "sm-shop": 2,
+        "sm-shop-model": 33,
+        "(root)": 0
+      }
+    },
+    "configuration": {
+      "java_files": 51,
+      "files_with_javax": 8,
+      "files_requiring_migration": 8,
+      "references": 32,
+      "references_requiring_migration": 32,
+      "share_of_references_pct": 2.12,
+      "annotation_usages": 29,
+      "by_family": {
+        "servlet": 5,
+        "persistence": 25,
+        "validation": 0,
+        "ws.rs": 0,
+        "inject": 2,
+        "annotation": 0,
+        "xml": 0,
+        "other": 0
+      },
+      "by_module": {
+        "sm-core": 3,
+        "sm-core-model": 24,
+        "sm-core-modules": 0,
+        "sm-shop": 5,
+        "sm-shop-model": 0,
+        "(root)": 0
+      }
+    },
+    "other": {
+      "java_files": 219,
+      "files_with_javax": 64,
+      "files_requiring_migration": 62,
+      "references": 96,
+      "references_requiring_migration": 92,
+      "share_of_references_pct": 6.35,
+      "annotation_usages": 125,
+      "by_family": {
+        "servlet": 32,
+        "persistence": 1,
+        "validation": 11,
+        "ws.rs": 0,
+        "inject": 45,
+        "annotation": 3,
+        "xml": 0,
+        "other": 4
+      },
+      "by_module": {
+        "sm-core": 14,
+        "sm-core-model": 0,
+        "sm-core-modules": 0,
+        "sm-shop": 82,
+        "sm-shop-model": 0,
+        "(root)": 0
+      }
+    }
+  },
+  "by_source_set": {
+    "main": {
+      "files_with_javax": 337,
+      "files_requiring_migration": 333,
+      "references": 1496,
+      "references_requiring_migration": 1488,
+      "share_of_references_pct": 98.94,
+      "annotation_usages": 2031,
+      "by_family": {
+        "servlet": 110,
+        "persistence": 1062,
+        "validation": 123,
+        "ws.rs": 3,
+        "inject": 166,
+        "annotation": 12,
+        "xml": 0,
+        "other": 20
+      },
+      "by_layer": {
+        "controller": 148,
+        "service": 122,
+        "repository": 40,
+        "model/DTO": 1074,
+        "configuration": 32,
+        "other": 80
+      },
+      "by_module": {
+        "sm-core": 142,
+        "sm-core-model": 1063,
+        "sm-core-modules": 0,
+        "sm-shop": 258,
+        "sm-shop-model": 33,
+        "(root)": 0
+      }
+    },
+    "test": {
+      "files_with_javax": 15,
+      "files_requiring_migration": 15,
+      "references": 16,
+      "references_requiring_migration": 16,
+      "share_of_references_pct": 1.06,
+      "annotation_usages": 50,
+      "by_family": {
+        "servlet": 0,
+        "persistence": 0,
+        "validation": 0,
+        "ws.rs": 0,
+        "inject": 16,
+        "annotation": 0,
+        "xml": 0,
+        "other": 0
+      },
+      "by_layer": {
+        "controller": 0,
+        "service": 0,
+        "repository": 0,
+        "model/DTO": 0,
+        "configuration": 0,
+        "other": 16
+      },
+      "by_module": {
+        "sm-core": 11,
+        "sm-core-model": 0,
+        "sm-core-modules": 0,
+        "sm-shop": 5,
+        "sm-shop-model": 0,
+        "(root)": 0
+      }
+    }
+  },
+  "top_namespaces": [
+    {
+      "rank": 1,
+      "namespace": "javax.persistence",
+      "family": "persistence",
+      "references": 1062,
+      "files": 109,
+      "annotation_usages": 1365,
+      "migration_required": "yes",
+      "jakarta_target": "jakarta.persistence",
+      "representative_locations": [
+        "sm-core/src/main/java/com/salesmanager/core/business/configuration/DataConfiguration.java:5",
+        "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/catalog/Catalog.java:7",
+        "sm-shop/src/main/java/com/salesmanager/shop/store/controller/shoppingCart/facade/ShoppingCartFacadeImpl.java:20"
+      ]
+    },
+    {
+      "rank": 2,
+      "namespace": "javax.inject",
+      "family": "inject",
+      "references": 182,
+      "files": 179,
+      "annotation_usages": 503,
+      "migration_required": "yes",
+      "jakarta_target": "jakarta.inject",
+      "representative_locations": [
+        "sm-core/src/main/java/com/salesmanager/core/business/configuration/ProcessorsConfiguration.java:6",
+        "sm-shop/src/main/java/com/salesmanager/shop/admin/security/AbstractAuthenticatinSuccessHandler.java:5",
+        "sm-core/src/main/java/com/salesmanager/core/business/configuration/db/DbConfig.java:3"
+      ]
+    },
+    {
+      "rank": 3,
+      "namespace": "javax.servlet.http",
+      "family": "servlet",
+      "references": 89,
+      "files": 58,
+      "annotation_usages": 0,
+      "migration_required": "yes",
+      "jakarta_target": "jakarta.servlet.http",
+      "representative_locations": [
+        "sm-shop/src/main/java/com/salesmanager/shop/admin/security/AbstractAuthenticatinSuccessHandler.java:6",
+        "sm-shop/src/main/java/com/salesmanager/shop/admin/security/UserAuthenticationSuccessHandler.java:3",
+        "sm-shop/src/main/java/com/salesmanager/shop/application/config/LanguageArgumentResolver.java:3"
+      ]
+    },
+    {
+      "rank": 4,
+      "namespace": "javax.validation.constraints",
+      "family": "validation",
+      "references": 66,
+      "files": 43,
+      "annotation_usages": 100,
+      "migration_required": "yes",
+      "jakarta_target": "jakarta.validation.constraints",
+      "representative_locations": [
+        "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/catalog/Catalog.java:23",
+        "sm-shop/src/main/java/com/salesmanager/shop/model/shop/ContactForm.java:3",
+        "sm-shop-model/src/main/java/com/salesmanager/shop/model/catalog/SearchProductRequest.java:5"
+      ]
+    },
+    {
+      "rank": 5,
+      "namespace": "javax.validation",
+      "family": "validation",
+      "references": 57,
+      "files": 49,
+      "annotation_usages": 96,
+      "migration_required": "yes",
+      "jakarta_target": "jakarta.validation",
+      "representative_locations": [
+        "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/catalog/Catalog.java:22",
+        "sm-shop/src/main/java/com/salesmanager/shop/store/api/v0/store/StoreContactRESTController.java:10",
+        "sm-shop-model/src/main/java/com/salesmanager/shop/model/customer/CustomerEntity.java:5"
+      ]
+    },
+    {
+      "rank": 6,
+      "namespace": "javax.servlet",
+      "family": "servlet",
+      "references": 20,
+      "files": 8,
+      "annotation_usages": 0,
+      "migration_required": "yes",
+      "jakarta_target": "jakarta.servlet",
+      "representative_locations": [
+        "sm-shop/src/main/java/com/salesmanager/shop/application/config/ShopServletContextListener.java:7",
+        "sm-shop/src/main/java/com/salesmanager/shop/filter/CorsFilter.java:5",
+        "sm-shop/src/main/java/com/salesmanager/shop/filter/XssFilter.java:5"
+      ]
+    },
+    {
+      "rank": 7,
+      "namespace": "javax.annotation",
+      "family": "annotation",
+      "references": 12,
+      "files": 12,
+      "annotation_usages": 14,
+      "migration_required": "yes",
+      "jakarta_target": "jakarta.annotation",
+      "representative_locations": [
+        "sm-core/src/main/java/com/salesmanager/core/business/modules/cms/content/infinispan/CmsStaticContentFileManagerImpl.java:16",
+        "sm-shop/src/main/java/com/salesmanager/shop/controller/ImagesController.java:7",
+        "sm-core/src/main/java/com/salesmanager/core/business/modules/cms/content/local/CmsStaticContentFileManagerImpl.java:17"
+      ]
+    },
+    {
+      "rank": 8,
+      "namespace": "javax.activation",
+      "family": "other",
+      "references": 4,
+      "files": 1,
+      "annotation_usages": 0,
+      "migration_required": "yes",
+      "jakarta_target": "jakarta.activation",
+      "representative_locations": [
+        "sm-core/src/main/java/com/salesmanager/core/business/modules/email/DefaultEmailSenderImpl.java:93",
+        "sm-core/src/main/java/com/salesmanager/core/business/modules/email/DefaultEmailSenderImpl.java:126"
+      ]
+    },
+    {
+      "rank": 9,
+      "namespace": "javax.crypto",
+      "family": "other",
+      "references": 4,
+      "files": 2,
+      "annotation_usages": 0,
+      "migration_required": "no",
+      "jakarta_target": "",
+      "representative_locations": [
+        "sm-core/src/main/java/com/salesmanager/core/business/modules/utils/EncryptionImpl.java:3",
+        "sm-shop/src/main/java/com/salesmanager/shop/utils/TokenizeTool.java:3",
+        "sm-shop/src/main/java/com/salesmanager/shop/utils/TokenizeTool.java:4"
+      ]
+    },
+    {
+      "rank": 10,
+      "namespace": "javax.mail",
+      "family": "other",
+      "references": 4,
+      "files": 1,
+      "annotation_usages": 0,
+      "migration_required": "yes",
+      "jakarta_target": "jakarta.mail",
+      "representative_locations": [
+        "sm-core/src/main/java/com/salesmanager/core/business/modules/email/DefaultEmailSenderImpl.java:11",
+        "sm-core/src/main/java/com/salesmanager/core/business/modules/email/DefaultEmailSenderImpl.java:12",
+        "sm-core/src/main/java/com/salesmanager/core/business/modules/email/DefaultEmailSenderImpl.java:13"
+      ]
+    }
+  ],
+  "maven_coordinates": [
+    {
+      "pom": "pom.xml",
+      "line": 118,
+      "element": "dependency",
+      "groupId": "javax.inject",
+      "artifactId": "javax.inject",
+      "version": "${javax.inject.version}"
+    },
+    {
+      "pom": "pom.xml",
+      "line": 163,
+      "element": "dependency",
+      "groupId": "javax.mail",
+      "artifactId": "mail",
+      "version": "1.4.7"
+    },
+    {
+      "pom": "pom.xml",
+      "line": 364,
+      "element": "dependency",
+      "groupId": "javax.annotation",
+      "artifactId": "javax.annotation-api",
+      "version": "${javax.annotation}"
+    },
+    {
+      "pom": "pom.xml",
+      "line": 377,
+      "element": "dependency",
+      "groupId": "javax.inject",
+      "artifactId": "javax.inject",
+      "version": ""
+    },
+    {
+      "pom": "pom.xml",
+      "line": 382,
+      "element": "dependency",
+      "groupId": "javax.validation",
+      "artifactId": "validation-api",
+      "version": ""
+    },
+    {
+      "pom": "pom.xml",
+      "line": 418,
+      "element": "dependency",
+      "groupId": "javax.mail",
+      "artifactId": "javax.mail-api",
+      "version": ""
+    },
+    {
+      "pom": "pom.xml",
+      "line": 424,
+      "element": "dependency",
+      "groupId": "javax.mail",
+      "artifactId": "mail",
+      "version": ""
+    },
+    {
+      "pom": "sm-core-model/pom.xml",
+      "line": 67,
+      "element": "dependency",
+      "groupId": "javax.validation",
+      "artifactId": "validation-api",
+      "version": ""
+    },
+    {
+      "pom": "sm-shop-model/pom.xml",
+      "line": 68,
+      "element": "dependency",
+      "groupId": "javax.annotation",
+      "artifactId": "javax.annotation-api",
+      "version": ""
+    }
+  ],
+  "files": [
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/catalog/Catalog.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 17,
+      "references_requiring_migration": 17,
+      "annotation_usages": 17,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/catalog/CatalogCategoryEntry.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 12,
+      "references_requiring_migration": 12,
+      "annotation_usages": 13,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/category/Category.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 18,
+      "references_requiring_migration": 18,
+      "annotation_usages": 26,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/category/CategoryDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 7,
+      "references_requiring_migration": 7,
+      "annotation_usages": 11,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/marketplace/Catalog.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/marketplace/MarketPlace.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/Product.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 21,
+      "references_requiring_migration": 21,
+      "annotation_usages": 52,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/ProductDimensions.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 5,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/attribute/ProductAttribute.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 13,
+      "references_requiring_migration": 13,
+      "annotation_usages": 25,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/attribute/ProductOption.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 17,
+      "references_requiring_migration": 17,
+      "annotation_usages": 18,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/attribute/ProductOptionDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 7,
+      "references_requiring_migration": 7,
+      "annotation_usages": 7,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/attribute/ProductOptionSet.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 15,
+      "references_requiring_migration": 15,
+      "annotation_usages": 19,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/attribute/ProductOptionValue.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 17,
+      "references_requiring_migration": 17,
+      "annotation_usages": 19,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/attribute/ProductOptionValueDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 6,
+      "references_requiring_migration": 6,
+      "annotation_usages": 6,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/availability/ProductAvailability.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 20,
+      "references_requiring_migration": 20,
+      "annotation_usages": 33,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/description/ProductDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 8,
+      "references_requiring_migration": 8,
+      "annotation_usages": 13,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/file/DigitalProduct.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 10,
+      "references_requiring_migration": 10,
+      "annotation_usages": 10,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/image/ProductImage.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 13,
+      "references_requiring_migration": 13,
+      "annotation_usages": 16,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/image/ProductImageDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 7,
+      "references_requiring_migration": 7,
+      "annotation_usages": 7,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/manufacturer/Manufacturer.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 16,
+      "references_requiring_migration": 16,
+      "annotation_usages": 16,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/manufacturer/ManufacturerDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 7,
+      "references_requiring_migration": 7,
+      "annotation_usages": 9,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/price/ProductPrice.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 18,
+      "references_requiring_migration": 18,
+      "annotation_usages": 22,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/price/ProductPriceDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 7,
+      "references_requiring_migration": 7,
+      "annotation_usages": 7,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/relationship/ProductRelationship.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 9,
+      "references_requiring_migration": 9,
+      "annotation_usages": 14,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/review/ProductReview.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 18,
+      "references_requiring_migration": 18,
+      "annotation_usages": 19,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/review/ProductReviewDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 6,
+      "references_requiring_migration": 6,
+      "annotation_usages": 6,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/type/ProductType.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 14,
+      "references_requiring_migration": 14,
+      "annotation_usages": 14,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/type/ProductTypeDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 6,
+      "references_requiring_migration": 6,
+      "annotation_usages": 6,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/variant/ProductVariant.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 20,
+      "references_requiring_migration": 20,
+      "annotation_usages": 28,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/variant/ProductVariantGroup.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 13,
+      "references_requiring_migration": 13,
+      "annotation_usages": 11,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/variant/ProductVariantImage.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 12,
+      "references_requiring_migration": 12,
+      "annotation_usages": 11,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/variant/ProductVariantImageDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 7,
+      "references_requiring_migration": 7,
+      "annotation_usages": 9,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/catalog/product/variation/ProductVariation.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 14,
+      "references_requiring_migration": 14,
+      "annotation_usages": 19,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/common/Billing.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 6,
+      "references_requiring_migration": 6,
+      "annotation_usages": 17,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/common/CredentialsReset.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 4,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/common/Delivery.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 6,
+      "references_requiring_migration": 6,
+      "annotation_usages": 15,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/common/audit/AuditListener.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 2,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/common/audit/AuditSection.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 6,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/common/description/Description.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 12,
+      "references_requiring_migration": 12,
+      "annotation_usages": 13,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/content/Content.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 20,
+      "references_requiring_migration": 20,
+      "annotation_usages": 24,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/content/ContentDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 8,
+      "references_requiring_migration": 8,
+      "annotation_usages": 10,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/customer/Customer.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 24,
+      "references_requiring_migration": 24,
+      "annotation_usages": 39,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/customer/attribute/CustomerAttribute.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 11,
+      "references_requiring_migration": 11,
+      "annotation_usages": 14,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/customer/attribute/CustomerOption.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 18,
+      "references_requiring_migration": 18,
+      "annotation_usages": 20,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/customer/attribute/CustomerOptionDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 8,
+      "references_requiring_migration": 8,
+      "annotation_usages": 7,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/customer/attribute/CustomerOptionSet.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 11,
+      "references_requiring_migration": 11,
+      "annotation_usages": 12,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/customer/attribute/CustomerOptionValue.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 18,
+      "references_requiring_migration": 18,
+      "annotation_usages": 18,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/customer/attribute/CustomerOptionValueDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 7,
+      "references_requiring_migration": 7,
+      "annotation_usages": 6,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/customer/connection/AbstractUserConnection.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/customer/connection/AbstractUserConnectionWithCompositeKey.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 4,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/customer/connection/UserConnection.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/customer/connection/UserConnectionPK.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/customer/review/CustomerReview.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 18,
+      "references_requiring_migration": 18,
+      "annotation_usages": 19,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/customer/review/CustomerReviewDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 7,
+      "references_requiring_migration": 7,
+      "annotation_usages": 6,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/merchant/MerchantStore.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 22,
+      "references_requiring_migration": 22,
+      "annotation_usages": 52,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/order/Order.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 17,
+      "references_requiring_migration": 17,
+      "annotation_usages": 43,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/order/OrderTotal.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 11,
+      "references_requiring_migration": 11,
+      "annotation_usages": 18,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/order/attributes/OrderAttribute.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 9,
+      "references_requiring_migration": 9,
+      "annotation_usages": 10,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/order/filehistory/FileHistory.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 12,
+      "references_requiring_migration": 12,
+      "annotation_usages": 18,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/order/orderaccount/OrderAccount.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 13,
+      "references_requiring_migration": 13,
+      "annotation_usages": 14,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/order/orderaccount/OrderAccountProduct.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 12,
+      "references_requiring_migration": 12,
+      "annotation_usages": 23,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/order/orderproduct/OrderProduct.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 11,
+      "references_requiring_migration": 11,
+      "annotation_usages": 15,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/order/orderproduct/OrderProductAttribute.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 9,
+      "references_requiring_migration": 9,
+      "annotation_usages": 15,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/order/orderproduct/OrderProductDownload.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 9,
+      "references_requiring_migration": 9,
+      "annotation_usages": 11,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/order/orderproduct/OrderProductPrice.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 11,
+      "references_requiring_migration": 11,
+      "annotation_usages": 17,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/order/orderstatus/OrderStatusHistory.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 13,
+      "references_requiring_migration": 13,
+      "annotation_usages": 13,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/order/payment/CreditCard.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 7,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/payments/Transaction.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 17,
+      "references_requiring_migration": 17,
+      "annotation_usages": 19,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/reference/country/Country.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 14,
+      "references_requiring_migration": 14,
+      "annotation_usages": 14,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/reference/country/CountryDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 7,
+      "references_requiring_migration": 7,
+      "annotation_usages": 6,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/reference/currency/Currency.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 8,
+      "references_requiring_migration": 8,
+      "annotation_usages": 11,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/reference/geozone/GeoZone.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 9,
+      "references_requiring_migration": 9,
+      "annotation_usages": 10,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/reference/geozone/GeoZoneDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 7,
+      "references_requiring_migration": 7,
+      "annotation_usages": 6,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/reference/language/Language.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 14,
+      "references_requiring_migration": 14,
+      "annotation_usages": 14,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/reference/zone/Zone.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 13,
+      "references_requiring_migration": 13,
+      "annotation_usages": 11,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/reference/zone/ZoneDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 6,
+      "references_requiring_migration": 6,
+      "annotation_usages": 6,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/shipping/Quote.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 10,
+      "references_requiring_migration": 10,
+      "annotation_usages": 24,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/shipping/ShippingOrigin.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 11,
+      "references_requiring_migration": 11,
+      "annotation_usages": 20,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/shoppingcart/ShoppingCart.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 18,
+      "references_requiring_migration": 18,
+      "annotation_usages": 21,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/shoppingcart/ShoppingCartAttributeItem.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 12,
+      "references_requiring_migration": 12,
+      "annotation_usages": 12,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/shoppingcart/ShoppingCartItem.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 15,
+      "references_requiring_migration": 15,
+      "annotation_usages": 21,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/system/IntegrationModule.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 11,
+      "references_requiring_migration": 11,
+      "annotation_usages": 22,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/system/MerchantConfiguration.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "configuration",
+      "references": 15,
+      "references_requiring_migration": 15,
+      "annotation_usages": 16,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/system/MerchantLog.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 11,
+      "references_requiring_migration": 11,
+      "annotation_usages": 11,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/system/SystemConfiguration.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "configuration",
+      "references": 9,
+      "references_requiring_migration": 9,
+      "annotation_usages": 10,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/system/SystemNotification.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 15,
+      "references_requiring_migration": 15,
+      "annotation_usages": 19,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/system/optin/CustomerOptin.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 14,
+      "references_requiring_migration": 14,
+      "annotation_usages": 18,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/system/optin/Optin.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 15,
+      "references_requiring_migration": 15,
+      "annotation_usages": 18,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/tax/taxclass/TaxClass.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 14,
+      "references_requiring_migration": 14,
+      "annotation_usages": 16,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/tax/taxrate/TaxRate.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 19,
+      "references_requiring_migration": 19,
+      "annotation_usages": 29,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/tax/taxrate/TaxRateDescription.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 7,
+      "references_requiring_migration": 7,
+      "annotation_usages": 6,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/user/Group.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 17,
+      "references_requiring_migration": 17,
+      "annotation_usages": 17,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/user/Permission.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 11,
+      "references_requiring_migration": 11,
+      "annotation_usages": 11,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core-model/src/main/java/com/salesmanager/core/model/user/User.java",
+      "module": "sm-core-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 21,
+      "references_requiring_migration": 21,
+      "annotation_usages": 39,
+      "families": [
+        "persistence",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/configuration/DataConfiguration.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "configuration",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 0,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/configuration/ProcessorsConfiguration.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "configuration",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/configuration/db/DbConfig.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "configuration",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/cms/content/infinispan/CmsStaticContentFileManagerImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "annotation"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/cms/content/local/CmsStaticContentFileManagerImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "annotation"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/cms/product/ProductFileManagerImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 0,
+      "annotation_usages": 0,
+      "families": [
+        "other"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/cms/product/infinispan/CmsImageFileManagerImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "annotation"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/cms/product/local/CmsImageFileManagerImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "annotation"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/email/DefaultEmailSenderImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 13,
+      "references_requiring_migration": 13,
+      "annotation_usages": 2,
+      "families": [
+        "inject",
+        "other"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/email/EmailComponent.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/email/SESEmailSenderImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/integration/payment/impl/BeanStreamPayment.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/integration/payment/impl/PayPalExpressCheckoutPayment.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/integration/payment/impl/Stripe3Payment.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/integration/payment/impl/StripePayment.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/CustomShippingQuoteRules.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/CustomWeightBasedShippingQuote.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/DefaultPackagingImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/ShippingDecisionPreProcessorImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/StorePickupShippingQuote.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/integration/shipping/impl/USPSShippingQuote.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/order/ODSInvoiceModule.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 3,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/modules/utils/EncryptionImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 3,
+      "references_requiring_migration": 0,
+      "annotation_usages": 0,
+      "families": [
+        "other"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/repositories/catalog/category/CategoryRepositoryImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "repository",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/repositories/catalog/category/PageableCategoryRepositoryImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "repository",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/repositories/catalog/product/ProductRepositoryImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "repository",
+      "references": 10,
+      "references_requiring_migration": 10,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/repositories/catalog/product/relationship/ProductRelationshipRepositoryImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "repository",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/repositories/content/ContentRepositoryImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "repository",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/repositories/customer/CustomerRepositoryImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "repository",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/repositories/merchant/MerchantRepositoryImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "repository",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/repositories/order/OrderRepositoryImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "repository",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/repositories/payments/TransactionRepository.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "repository",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 0,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/repositories/user/PermissionRepositoryImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "repository",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/repositories/user/UserRepositoryImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "repository",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 1,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/catalog/CatalogEntryServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/catalog/CatalogServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/category/CategoryServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 4,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/pricing/PricingServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/ProductServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 11,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/attribute/ProductAttributeServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/attribute/ProductOptionServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/attribute/ProductOptionSetServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/attribute/ProductOptionValueServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/availability/ProductAvailabilityServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/file/DigitalProductServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 3,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/image/ProductImageServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/manufacturer/ManufacturerServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/price/ProductPriceServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/relationship/ProductRelationshipServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/review/ProductReviewServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/type/ProductTypeServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/variant/ProductVariantServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/catalog/product/variation/ProductVariationServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/content/ContentServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/customer/CustomerServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 3,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/customer/attribute/CustomerAttributeServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/customer/attribute/CustomerOptionServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 3,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/customer/attribute/CustomerOptionSetServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/customer/attribute/CustomerOptionValueServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 3,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/customer/optin/CustomerOptinServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/customer/review/CustomerReviewServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/merchant/MerchantStoreServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/order/OrderServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 10,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/order/orderproduct/OrderProductDownloadServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/order/ordertotal/OrderTotalServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 2,
+      "families": [
+        "inject",
+        "annotation"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/payments/PaymentServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 8,
+      "families": [
+        "inject",
+        "annotation"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/payments/TransactionServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/reference/country/CountryServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/reference/currency/CurrencyServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/reference/init/InitializationDatabaseImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 14,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/reference/language/LanguageServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/reference/loader/ZonesLoader.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/reference/zone/ZoneServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/search/SearchServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 2,
+      "families": [
+        "inject",
+        "annotation"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/shipping/ShippingOriginServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/shipping/ShippingQuoteServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/shipping/ShippingServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 15,
+      "families": [
+        "inject",
+        "annotation"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/shoppingcart/ShoppingCartCalculationServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/shoppingcart/ShoppingCartServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 6,
+      "families": [
+        "persistence",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/system/EmailServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/system/MerchantConfigurationServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/system/MerchantLogServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/system/ModuleConfigurationServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 3,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/system/SystemConfigurationServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/system/optin/OptinServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/tax/TaxClassServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/tax/TaxRateServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/tax/TaxServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 3,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/user/GroupServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/user/PermissionServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/services/user/UserServiceImpl.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/utils/CacheUtils.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/utils/ProductImageCropUtils.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 0,
+      "annotation_usages": 0,
+      "families": [
+        "other"
+      ]
+    },
+    {
+      "file": "sm-core/src/main/java/com/salesmanager/core/business/utils/RepositoryHelper.java",
+      "module": "sm-core",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 0,
+      "families": [
+        "persistence"
+      ]
+    },
+    {
+      "file": "sm-core/src/test/java/com/salesmanager/test/common/AbstractSalesManagerCoreTestCase.java",
+      "module": "sm-core",
+      "source_set": "test",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 28,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/test/java/com/salesmanager/test/content/ContentFolderTest.java",
+      "module": "sm-core",
+      "source_set": "test",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/test/java/com/salesmanager/test/content/ContentImagesTest.java",
+      "module": "sm-core",
+      "source_set": "test",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/test/java/com/salesmanager/test/content/StaticContentTest.java",
+      "module": "sm-core",
+      "source_set": "test",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/test/java/com/salesmanager/test/references/ReferencesTest.java",
+      "module": "sm-core",
+      "source_set": "test",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/test/java/com/salesmanager/test/shipping/ShippingDistanceProcessorTest.java",
+      "module": "sm-core",
+      "source_set": "test",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/test/java/com/salesmanager/test/shipping/ShippingMethodDecisionTest.java",
+      "module": "sm-core",
+      "source_set": "test",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/test/java/com/salesmanager/test/shipping/ShippingQuoteByWeightTest.java",
+      "module": "sm-core",
+      "source_set": "test",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/test/java/com/salesmanager/test/utils/ImportIntegrationModule.java",
+      "module": "sm-core",
+      "source_set": "test",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/test/java/com/salesmanager/test/utils/SendEmailTest.java",
+      "module": "sm-core",
+      "source_set": "test",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-core/src/test/java/com/salesmanager/test/utils/UtilsTestCase.java",
+      "module": "sm-core",
+      "source_set": "test",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 5,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/catalog/SearchProductRequest.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/catalog/product/PersistableProductReview.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/catalog/product/ProductReviewEntity.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 4,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/catalog/product/inventory/PersistableInventory.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/content/Content.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/customer/CustomerEntity.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 3,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/customer/CustomerPassword.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 3,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/customer/CustomerReviewEntity.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 4,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/customer/SecuredCustomer.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/customer/optin/CustomerOptinEntity.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 2,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/entity/NameEntity.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/entity/UniqueEntity.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/marketplace/SignupStore.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 13,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/store/MerchantStoreEntity.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 4,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/model/tax/TaxClassEntity.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/validation/Enum.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 1,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/validation/EnumValidator.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 0,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/validation/FieldMatch.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 1,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop-model/src/main/java/com/salesmanager/shop/validation/FieldMatchValidator.java",
+      "module": "sm-shop-model",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 0,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/admin/security/AbstractAuthenticatinSuccessHandler.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 1,
+      "families": [
+        "servlet",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/admin/security/UserAuthenticationSuccessHandler.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/admin/security/UserServicesImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 6,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/application/config/LanguageArgumentResolver.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "configuration",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/application/config/MerchantStoreArgumentResolver.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "configuration",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/application/config/ShopServletContextListener.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "configuration",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 1,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/controller/FilesController.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 1,
+      "families": [
+        "servlet",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/controller/ImagesController.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 3,
+      "families": [
+        "servlet",
+        "inject",
+        "annotation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/filter/CorsFilter.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 8,
+      "references_requiring_migration": 8,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/filter/XssFilter.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 7,
+      "references_requiring_migration": 7,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/filter/XssHttpServletRequestWrapper.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/init/data/InitializationLoader.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 9,
+      "families": [
+        "inject",
+        "annotation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/mapper/catalog/PersistableProductAttributeMapper.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 4,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/mapper/catalog/ReadableProductImageMapper.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/mapper/catalog/product/ReadableProductVariantGroupMapper.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/mapper/catalog/product/ReadableProductVariantMapper.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/mapper/order/ReadableOrderProductMapper.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/model/shop/ContactForm.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "model/DTO",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 4,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/populator/catalog/PersistableCategoryPopulator.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/populator/store/PersistableMerchantStorePopulator.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 5,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/populator/user/PersistableUserPopulator.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 5,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v0/store/StoreContactRESTController.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 4,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v0/system/SystemRESTController.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 1,
+      "families": [
+        "servlet",
+        "ws.rs",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/catalog/CatalogApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 3,
+      "families": [
+        "servlet",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/category/CategoryApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 5,
+      "families": [
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/configurations/CacheApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/content/ContentAdministrationApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/content/ContentApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 8,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/customer/AuthenticateCustomerApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 8,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/customer/CustomerApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 4,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/customer/CustomerNewsletterApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 3,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/customer/CustomerReviewApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 7,
+      "families": [
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/customer/ResetCustomerPasswordApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 3,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/marketplace/MarketPlaceApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 11,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderPaymentApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 9,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderShippingApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 6,
+      "families": [
+        "servlet",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderStatusHistoryApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/order/OrderTotalApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 6,
+      "families": [
+        "servlet",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/product/ProductApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 7,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/product/ProductAttributeOptionApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 7,
+      "families": [
+        "servlet",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/product/ProductGroupApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 2,
+      "families": [
+        "servlet",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/product/ProductImageApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 3,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/product/ProductInventoryApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/product/ProductManufacturerApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 4,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/product/ProductPriceApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 4,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/product/ProductPropertySetApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/product/ProductRelationshipApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 2,
+      "families": [
+        "servlet",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/product/ProductReviewApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 5,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/product/ProductTypeApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/references/ReferencesApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 6,
+      "families": [
+        "servlet",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/search/SearchApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/security/SecurityApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/shipping/ShippingExpeditionApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/shoppingCart/ShoppingCartApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 4,
+      "references_requiring_migration": 4,
+      "annotation_usages": 7,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/store/MerchantStoreApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 4,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/system/ContactApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 3,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/system/OptinApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 2,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/system/PublicConfigsApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 3,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/system/SearchToolsApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 2,
+      "families": [
+        "servlet",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/tax/TaxClassApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/tax/TaxRatesApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/user/AuthenticateUserApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 4,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/user/ResetUserPasswordApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 3,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v1/user/UserApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 5,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v2/product/ProductApiV2.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 4,
+      "families": [
+        "servlet",
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v2/product/ProductVariantApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 3,
+      "families": [
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v2/product/ProductVariantGroupApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/api/v2/product/ProductVariationApi.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 7,
+      "families": [
+        "servlet",
+        "validation",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/AbstractController.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/country/facade/CountryFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/currency/facade/CurrencyFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/customer/facade/CustomerFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 18,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/error/ShopErrorController.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 2,
+      "families": [
+        "ws.rs"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/language/facade/LanguageFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/marketplace/facade/MarketPlaceFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/optin/OptinFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 3,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/order/facade/OrderFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 17,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/search/facade/SearchFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 5,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/security/facade/SecurityFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 3,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/shoppingCart/facade/ShoppingCartFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 6,
+      "families": [
+        "persistence",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/store/facade/StoreFacade.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/store/facade/StoreFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 7,
+      "families": [
+        "servlet",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/system/MerchantConfigurationFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/controller/zone/facade/ZoneFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/facade/category/CategoryFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 5,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/facade/content/ContentFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 4,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/facade/customer/CustomerFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/facade/items/ProductItemsFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 4,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/facade/manufacturer/ManufacturerFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/facade/product/ProductCommonFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 6,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/facade/product/ProductDefinitionFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/facade/product/ProductFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 6,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/facade/product/ProductFacadeV2Impl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 4,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/facade/user/UserFacadeImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "service",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 8,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/AuthenticationRequest.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/AuthenticationTokenFilter.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "controller",
+      "references": 5,
+      "references_requiring_migration": 5,
+      "annotation_usages": 2,
+      "families": [
+        "servlet",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/CustomerServicesImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/PasswordRequest.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/ResetPasswordRequest.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/RestAuthenticationEntryPoint.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/ServicesAuthenticationEntryPoint.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/ServicesAuthenticationSuccessHandler.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/SocialCustomerServicesImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/admin/AdminAccessDeniedHandler.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/admin/JWTAdminAuthenticationManager.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 2,
+      "families": [
+        "servlet",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/admin/JWTAdminAuthenticationProvider.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/admin/JWTAdminServicesImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 3,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/common/CustomAuthenticationManager.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/customer/JWTCustomerAuthenticationManager.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 2,
+      "families": [
+        "servlet",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/customer/JWTCustomerAuthenticationProvider.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/store/security/customer/JWTCustomerServicesImpl.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/AbstractimageFilePath.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "annotation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/AdminAccessDeniedHandler.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/AuthorizationUtils.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/CaptchaRequestUtils.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/DateUtil.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/EmailTemplatesUtils.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 9,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/EmailUtils.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/Enum.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 1,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/EnumValidator.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 0,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/FieldMatch.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 1,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/FieldMatchValidator.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 0,
+      "families": [
+        "validation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/FilePathUtils.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 3,
+      "families": [
+        "servlet",
+        "inject",
+        "annotation"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/GeoLocationUtils.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/LanguageUtils.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 3,
+      "references_requiring_migration": 3,
+      "annotation_usages": 1,
+      "families": [
+        "servlet",
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/ServiceRequestCriteriaBuilderUtils.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/SessionUtil.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 0,
+      "families": [
+        "servlet"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/TokenizeTool.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 3,
+      "references_requiring_migration": 0,
+      "annotation_usages": 0,
+      "families": [
+        "other"
+      ]
+    },
+    {
+      "file": "sm-shop/src/main/java/com/salesmanager/shop/utils/WebApplicationCacheUtils.java",
+      "module": "sm-shop",
+      "source_set": "main",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/test/java/com/salesmanager/test/shop/integration/store/MerchantStoreApiIntegrationTest.java",
+      "module": "sm-shop",
+      "source_set": "test",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/test/java/com/salesmanager/test/shop/integration/system/ActuatorTest.java",
+      "module": "sm-shop",
+      "source_set": "test",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/test/java/com/salesmanager/test/shop/integration/user/UserApiIntegrationTest.java",
+      "module": "sm-shop",
+      "source_set": "test",
+      "layer": "other",
+      "references": 1,
+      "references_requiring_migration": 1,
+      "annotation_usages": 1,
+      "families": [
+        "inject"
+      ]
+    },
+    {
+      "file": "sm-shop/src/test/java/com/salesmanager/test/shop/util/GeneratePasswordTest.java",
+      "module": "sm-shop",
+      "source_set": "test",
+      "layer": "other",
+      "references": 2,
+      "references_requiring_migration": 2,
+      "annotation_usages": 2,
+      "families": [
+        "inject"
+      ]
+    }
+  ]
+}
