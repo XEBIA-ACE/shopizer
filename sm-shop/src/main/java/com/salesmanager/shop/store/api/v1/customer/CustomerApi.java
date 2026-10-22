@@ -33,6 +33,8 @@ import com.salesmanager.shop.populator.customer.ReadableCustomerList;
 import com.salesmanager.shop.store.api.exception.ResourceNotFoundException;
 import com.salesmanager.shop.store.api.exception.ServiceRuntimeException;
 import com.salesmanager.shop.store.api.exception.UnauthorizedException;
+import com.salesmanager.shop.store.controller.customer.deletion.AccountDeletionAuditService;
+import com.salesmanager.shop.store.controller.customer.deletion.AccountDeletionEvent;
 import com.salesmanager.shop.store.controller.customer.facade.CustomerFacade;
 import com.salesmanager.shop.store.controller.user.facade.UserFacade;
 
@@ -57,6 +59,9 @@ public class CustomerApi {
 	
     @Autowired
     private UserFacade userFacade;
+
+	@Inject
+	private AccountDeletionAuditService accountDeletionAuditService;
 
 	/** Create new customer for a given MerchantStore */
 	@PostMapping("/private/customer")
@@ -195,8 +200,13 @@ public class CustomerApi {
 			if(customer == null) {
 				throw new ResourceNotFoundException("Customer [" + userName + "] not found");
 			}
+			// US-004 FR-US-004-005 / FR-US-004-006: audit the confirmation and completion around the
+			// existing Delete Account behavior, which is invoked unchanged
+			accountDeletionAuditService.record(AccountDeletionEvent.CONFIRMED, customer, merchantStore);
 			customerFacade.delete(customer);
+			accountDeletionAuditService.record(AccountDeletionEvent.COMPLETED, customer, merchantStore);
 		} catch (Exception e) {
+			accountDeletionAuditService.record(AccountDeletionEvent.FAILED, null, merchantStore == null ? null : merchantStore.getCode());
 			throw new ServiceRuntimeException("An error occured while deleting customer ["+userName+"]");
 		}
 		
